@@ -1,9 +1,19 @@
 {
   "name": "@nikolakterziev/cudosjs",
   "version": "0.0.2",
+  "author": "",
   "description": "JavaScript SDK for Cudos Network",
+  "license": "ISC",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CudoVentures/cudosjs"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
      "build": "rm -rf ./build && tsc",
@@ -11,8 +21,6 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
 
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@cosmjs/math": "^0.26.0"
   },
@@ -22,10 +30,6 @@
     "!*.spec.*",
     "!**/testdata/"
   ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
   "devDependencies": {
     "ts-loader": "^9.2.6",
     "ts-node": "^8",
