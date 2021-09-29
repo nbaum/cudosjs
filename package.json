@@ -21,15 +21,19 @@
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
 
   },
-  "dependencies": {
-    "@cosmjs/math": "^0.26.0"
-  },
-   "files": [
+  "files": [
     "build/",
     "*.md",
     "!*.spec.*",
     "!**/testdata/"
   ],
+  "dependencies": {
+    "@cosmjs/cosmwasm-stargate": "0.26.0",
+    "@cosmjs/proto-signing": "0.26.0",
+    "@cosmjs/stargate": "0.26.0",
+    "@cosmjs/amino": "0.26.0",
+    "@cosmjs/crypto": "0.26.0"
+  },
   "devDependencies": {
     "ts-loader": "^9.2.6",
     "ts-node": "^8",
