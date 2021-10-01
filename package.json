@@ -1,6 +1,6 @@
 {
   "name": "@nikolakterziev/cudosjs",
-  "version": "0.0.2",
+  "version": "0.0.13",
   "author": "",
   "description": "JavaScript SDK for Cudos Network",
   "license": "ISC",
@@ -16,10 +16,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "build": "rm -rf ./build && tsc",
+    "build": "rm -rf ./build && tsc",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
     "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
-
   },
   "files": [
     "build/",
@@ -31,8 +30,8 @@
     "@cosmjs/cosmwasm-stargate": "0.26.0",
     "@cosmjs/proto-signing": "0.26.0",
     "@cosmjs/stargate": "0.26.0",
-    "@cosmjs/amino": "0.26.0",
-    "@cosmjs/crypto": "0.26.0"
+    "@cosmjs/crypto": "0.26.0",
+    "@cosmjs/tendermint-rpc": "0.26.0"
   },
   "devDependencies": {
     "ts-loader": "^9.2.6",

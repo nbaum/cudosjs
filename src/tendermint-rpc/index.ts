@@ -1,0 +1,1 @@
+export { Tendermint34Client } from "@cosmjs/tendermint-rpc"
