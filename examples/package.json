@@ -1,0 +1,20 @@
+{
+  "name": "test-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test1": "node 1_connecting_to_client/cosmwasm-client.mjs",
+    "test2": "node 2_connecting_to_wallet_with_keplr/keplr-integration.mjs",
+    "test3": "node 3_query_node/node-querier.mjs",
+    "test4": "node 4_transaction/send-transaction.mjs",
+    "test5": "node 5_interact_with_smart_contract/interact.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nikolakterziev/cudosjs": "0.0.13",
+    "dotenv": "^10.0.0"
+  }
+}

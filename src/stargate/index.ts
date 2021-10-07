@@ -106,6 +106,5 @@ export {
 export {
   defaultRegistryTypes,
   SignerData,
-  SigningStargateClient,
   SigningStargateClientOptions,
 } from "@cosmjs/stargate";

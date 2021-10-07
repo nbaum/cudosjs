@@ -1,0 +1,1 @@
+For more Keplr details you can check the [API documentation](https://docs.keplr.app/api/). Snipet here is a rewoked version of the documentation's How to detect Keplr. 
