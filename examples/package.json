@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nikolakterziev/cudosjs": "0.0.13",
+    "cudosjs": "0.0.13",
     "dotenv": "^10.0.0"
   }
 }

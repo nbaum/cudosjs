@@ -1,5 +1,5 @@
 {
-  "name": "@nikolakterziev/cudosjs",
+  "name": "cudosjs",
   "version": "0.0.13",
   "author": "",
   "description": "JavaScript SDK for Cudos Network",
