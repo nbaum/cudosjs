@@ -1,4 +1,4 @@
-import { SigningCosmWasmClient, DirectSecp256k1HdWallet } from '@nikolakterziev/cudosjs'
+import { SigningCosmWasmClient, DirectSecp256k1HdWallet } from 'cudosjs'
   
 import * as fs from 'fs'
 import * as cfg from 'dotenv'

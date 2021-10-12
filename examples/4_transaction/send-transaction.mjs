@@ -1,5 +1,5 @@
-import { DirectSecp256k1HdWallet } from "@nikolakterziev/cudosjs";
-import { assertIsBroadcastTxSuccess, SigningCosmWasmClient } from "@nikolakterziev/cudosjs";
+import { DirectSecp256k1HdWallet } from "cudosjs";
+import { assertIsBroadcastTxSuccess, SigningCosmWasmClient } from "cudosjs";
 import * as cfg  from 'dotenv';
   
 cfg.config(); 

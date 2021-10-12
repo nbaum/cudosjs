@@ -35,3 +35,6 @@ coverage/
 # We are not using yarn's deferred versioning for now (see https://yarnpkg.com/features/release-workflow)
 # !.yarn/versions
 build/
+
+# package-lock.json
+package-lock.json

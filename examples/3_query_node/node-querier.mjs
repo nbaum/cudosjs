@@ -1,4 +1,4 @@
-import { CosmWasmClient } from "@nikolakterziev/cudosjs"
+import { CosmWasmClient } from "cudosjs"
     
 import * as cfg  from 'dotenv';
   
