@@ -5,6 +5,8 @@ name: Node.js Publish CI
 on:
   release:
     types: [created]
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -25,6 +27,5 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - run: yarn install
       # Publish to npm
+      - run: yarn build
       - run: yarn publish --new-version $(node -pe "require('./package.json').version")
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
