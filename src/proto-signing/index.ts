@@ -12,6 +12,7 @@ export {
     TsProtoGeneratedType,
     TxBodyEncodeObject,
     extractKdfConfiguration,
+    DirectSecp256k1Wallet,
     DirectSecp256k1HdWalletOptions,
     decodePubkey, encodePubkey,
     AccountData,

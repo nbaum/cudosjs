@@ -4,7 +4,6 @@ export {
   CodeDetails,
   Contract,
   ContractCodeHistoryEntry,
-  CosmWasmClient,
   JsonObject,
 } from "@cosmjs/cosmwasm-stargate";
 export {
@@ -27,7 +26,9 @@ export {
   InstantiateOptions,
   InstantiateResult,
   MigrateResult,
-  SigningCosmWasmClient,
   SigningCosmWasmClientOptions,
   UploadResult,
 } from "@cosmjs/cosmwasm-stargate";
+
+export { CudosCosmWasmClient as CosmWasmClient } from './cudos-cosmwasmclient';
+export { CudosSigningCosmWasmClient as SigningCosmWasmClient } from './cudos-signingcosmwasmclient';
