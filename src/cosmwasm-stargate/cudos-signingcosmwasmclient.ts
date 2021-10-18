@@ -1,5 +1,6 @@
 import { SigningCosmWasmClient, SigningCosmWasmClientOptions } from "@cosmjs/cosmwasm-stargate";
-import { OfflineSigner, Tendermint34Client } from "src";
+import { OfflineSigner } from "@cosmjs/proto-signing";
+import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 
 export class CudosSigningCosmWasmClient extends SigningCosmWasmClient {
 
