@@ -1,7 +1,7 @@
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { Coin } from "@cosmjs/amino";
-import { ACUDOS } from "src/utils";
+import { ACUDOS } from "../utils";
 
 export class CudosCosmWasmClient extends CosmWasmClient {
 
