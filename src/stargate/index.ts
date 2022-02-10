@@ -101,6 +101,7 @@ export {
   isBroadcastTxSuccess,
   SequenceResponse,
   StargateClient,
+  SigningStargateClient,
   TimeoutError,
 } from "@cosmjs/stargate";
 export {
