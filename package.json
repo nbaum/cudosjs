@@ -1,6 +1,6 @@
 {
   "name": "cudosjs",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "author": "",
   "description": "JavaScript SDK for Cudos Network",
   "license": "ISC",
@@ -27,11 +27,11 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmjs/cosmwasm-stargate": "0.26.0",
-    "@cosmjs/proto-signing": "0.26.0",
-    "@cosmjs/stargate": "0.26.0",
-    "@cosmjs/crypto": "0.26.0",
-    "@cosmjs/tendermint-rpc": "0.26.0"
+    "@cosmjs/cosmwasm-stargate": "^0.28.4",
+    "@cosmjs/crypto": "^0.28.4",
+    "@cosmjs/proto-signing": "^0.28.4",
+    "@cosmjs/stargate": "^0.28.4",
+    "@cosmjs/tendermint-rpc": "^0.28.4"
   },
   "devDependencies": {
     "ts-loader": "^9.2.6",
