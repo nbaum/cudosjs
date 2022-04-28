@@ -16,7 +16,7 @@ export { Random } from "@cosmjs/crypto";
 export { Ripemd160, ripemd160 } from "@cosmjs/crypto";
 export { Secp256k1, Secp256k1Keypair } from "@cosmjs/crypto";
 export { ExtendedSecp256k1Signature, Secp256k1Signature } from "@cosmjs/crypto";
-export { Sha1, sha1, Sha256, sha256, Sha512, sha512 } from "@cosmjs/crypto";
+export { Sha256, sha256, Sha512, sha512 } from "@cosmjs/crypto";
 export {
   HdPath,
   pathToString,
