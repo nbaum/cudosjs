@@ -99,8 +99,6 @@ export {
   DeliverTxResponse,
   IndexedTx,
   SequenceResponse,
-  StargateClient,
-  SigningStargateClient,
   TimeoutError,
 } from "@cosmjs/stargate";
 export {
@@ -108,3 +106,5 @@ export {
   SignerData,
   SigningStargateClientOptions,
 } from "@cosmjs/stargate";
+export { CudosStargateClient as StargateClient } from "./cudos-stargateclient";
+export { CudosSigningStargateClient as SigningStargateClient } from "./cudos-signingstargateclient";
