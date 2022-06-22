@@ -108,4 +108,3 @@ export {
 } from "@cosmjs/stargate";
 export { CudosStargateClient as StargateClient } from "./cudos-stargateclient";
 export { CudosSigningStargateClient as SigningStargateClient } from "./cudos-signingstargateclient";
-export { GroupModuleTypes } from "./modules/group/types"

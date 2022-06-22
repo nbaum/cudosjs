@@ -1,10 +1,12 @@
 import { OfflineSigner } from "@cosmjs/proto-signing";
-import { SigningStargateClientOptions, SigningStargateClient, StdFee, GasPrice, calculateFee } from "@cosmjs/stargate";
+import { SigningStargateClientOptions, SigningStargateClient } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { groupTypes } from "./modules/group/messages";
-
+import { getEstimateFeeFunction } from "../utils";
+import { GroupModule } from "./modules/group/types";
 
 export class CudosSigningStargateClient extends SigningStargateClient {
+    public readonly groupModule: GroupModule;
+
     public static override async connectWithSigner(
         endpoint: string | HttpEndpoint,
         signer: OfflineSigner,
@@ -20,18 +22,7 @@ export class CudosSigningStargateClient extends SigningStargateClient {
         options: SigningStargateClientOptions,
     ) {
         super(tmClient, signer, options);
-        groupTypes.forEach(([typeUrl, type]) => this.registry.register(typeUrl, type));
-    }
-
-    public async estimateFee(
-        signer: string,
-        messages: { typeUrl: string, value: any }[],
-        gasPrice: GasPrice,
-        gasMultiplier = 1.3,
-        memo = ""
-    ): Promise<StdFee> {
-        const gasEstimation = await this.simulate(signer, messages, memo);
-        const gasLimit = Math.round(gasEstimation * gasMultiplier);
-        return calculateFee(gasLimit, gasPrice);
+        this.groupModule = new GroupModule(getEstimateFeeFunction(this));
+        Object.values(this.groupModule.msgs).forEach(({ typeUrl, type }) => this.registry.register(typeUrl, type))
     }
 }
