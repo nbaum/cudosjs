@@ -1,6 +1,6 @@
 import { QueryClient, createProtobufRpcClient, BankExtension } from "@cosmjs/stargate";
 import { assert } from "@cosmjs/utils";
-import { QueryClientImpl, QueryGroupInfoResponse, QueryGroupPolicyInfoResponse, QueryGroupMembersResponse, QueryGroupsByAdminResponse, QueryGroupPoliciesByGroupResponse, QueryGroupPoliciesByAdminResponse, QueryProposalResponse, QueryProposalsByGroupPolicyResponse, QueryVoteByProposalVoterResponse, QueryVotesByProposalResponse, QueryVotesByVoterResponse, QueryTallyResultRequest, QueryTallyResultResponse } from "./types/query";
+import { QueryClientImpl, QueryGroupInfoResponse, QueryGroupPolicyInfoResponse, QueryGroupMembersResponse, QueryGroupsByAdminResponse, QueryGroupPoliciesByGroupResponse, QueryGroupPoliciesByAdminResponse, QueryProposalResponse, QueryProposalsByGroupPolicyResponse, QueryVoteByProposalVoterResponse, QueryVotesByProposalResponse, QueryVotesByVoterResponse, QueryTallyResultRequest, QueryTallyResultResponse } from "./proto-types/query.pb";
 import Long from "long";
 
 
@@ -28,7 +28,7 @@ export function setupGroupExtension(base: QueryClient): GroupExtension {
   return {
     group: {
       groupInfo: async (groupId: number) => {
-        return await queryService.GroupInfo({ groupId: Long.fromNumber(groupId) });
+        return queryService.GroupInfo({ groupId: Long.fromNumber(groupId) });
       }
     },
   };

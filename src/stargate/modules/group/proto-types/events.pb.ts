@@ -5,7 +5,7 @@ import {
   ProposalExecutorResult,
   proposalExecutorResultFromJSON,
   proposalExecutorResultToJSON,
-} from "./types";
+} from "./types.pb";
 
 export const protobufPackage = "cosmos.group.v1";
 

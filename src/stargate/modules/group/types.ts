@@ -1,8 +1,8 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { GasPrice, StdFee } from "src/stargate";
+import { GasPrice, StdFee } from "../..";
 import { EstimateFeeFn } from "../../../utils";
-import { MsgCreateGroupWithPolicy, MsgSubmitProposal } from "./types/tx";
-import { ThresholdDecisionPolicy, MemberRequest } from "./types/types";
+import { MsgCreateGroupWithPolicy, MsgSubmitProposal } from "./proto-types/tx.pb";
+import { ThresholdDecisionPolicy, MemberRequest } from "./proto-types/types.pb";
 
 export class GroupModule {
   private readonly _estimateFee: EstimateFeeFn;

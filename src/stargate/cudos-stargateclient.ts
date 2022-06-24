@@ -1,7 +1,7 @@
 import { QueryClient, StargateClient, StargateClientOptions } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { GroupExtension, setupGroupExtension } from "./modules/group/queries";
-import { QueryGroupInfoResponse } from "./modules/group/types/query";
+import { QueryGroupInfoResponse } from "./modules/group/proto-types/query.pb";
 
 
 export class CudosStargateClient extends StargateClient {
@@ -22,7 +22,6 @@ export class CudosStargateClient extends StargateClient {
 
     public async getGroupInfo(groupId: number): Promise<QueryGroupInfoResponse> {
         // todo check if ! on the end works 
-        return this.groupQueryClient.group.groupInfo(groupId)!;
+        return this.groupQueryClient.group.groupInfo(groupId);
     }
-
 }

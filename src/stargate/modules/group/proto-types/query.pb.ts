@@ -8,7 +8,7 @@ import {
   Vote,
   TallyResult,
   GroupMember,
-} from "./types";
+} from "./types.pb";
 import { PageRequest, PageResponse } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 
 export const protobufPackage = "cosmos.group.v1";
