@@ -1,8 +1,7 @@
 import { OfflineSigner } from "@cosmjs/proto-signing";
 import { SigningStargateClientOptions, SigningStargateClient } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { getEstimateFeeFunction } from "../utils";
-import { GroupModule } from "./modules/group/types";
+import { GroupModule } from "./modules/group/module";
 
 export class CudosSigningStargateClient extends SigningStargateClient {
     public readonly groupModule: GroupModule;
@@ -22,7 +21,6 @@ export class CudosSigningStargateClient extends SigningStargateClient {
         options: SigningStargateClientOptions,
     ) {
         super(tmClient, signer, options);
-        this.groupModule = new GroupModule(getEstimateFeeFunction(this));
-        Object.values(this.groupModule.msgs).forEach(({ typeUrl, type }) => this.registry.register(typeUrl, type))
+        this.groupModule = new GroupModule(this);
     }
 }
