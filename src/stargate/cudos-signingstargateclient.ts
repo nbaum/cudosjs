@@ -2,9 +2,11 @@ import { OfflineSigner } from "@cosmjs/proto-signing";
 import { SigningStargateClientOptions, SigningStargateClient } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { GroupModule } from "./modules/group/module";
+import { NftModule } from "./modules/nft/module";
 
 export class CudosSigningStargateClient extends SigningStargateClient {
     public readonly groupModule: GroupModule;
+    public readonly nftModule: NftModule;
 
     public static override async connectWithSigner(
         endpoint: string | HttpEndpoint,
@@ -22,5 +24,6 @@ export class CudosSigningStargateClient extends SigningStargateClient {
     ) {
         super(tmClient, signer, options);
         this.groupModule = new GroupModule(this);
+        this.nftModule = new NftModule(this);
     }
 }
