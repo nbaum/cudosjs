@@ -1,6 +1,6 @@
 import { MsgIssueDenom, MsgTransferNft, MsgApproveNft, MsgApproveAllNft, MsgRevokeNft, MsgEditNFT, MsgMintNFT, MsgBurnNFT } from "./proto-types/tx";
 
-const PREFIX = "/cudosnode.cudosnode.nft"
+const PREFIX = "/cudosnode.cudosnode.nft."
 export const msgIssueDenom = {
     typeUrl: PREFIX.concat("MsgIssueDenom"),
     type: MsgIssueDenom
