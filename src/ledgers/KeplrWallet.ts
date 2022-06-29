@@ -19,7 +19,7 @@ export interface KeplrWalletConfig {
     GAS_PRICE: string,
 }
 
-export default class KeplrWallet extends Ledger {
+export class KeplrWallet extends Ledger {
 
     keplrWalletConfig: KeplrWalletConfig;
 
