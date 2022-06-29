@@ -1,12 +1,12 @@
 import { makeCosmoshubPath } from "@cosmjs/amino"
 import { DirectSecp256k1HdWallet, DirectSecp256k1HdWalletOptions, } from "@cosmjs/proto-signing"
 import { EnglishMnemonic } from "@cosmjs/crypto";
-import { ADDRESS_PREFIX } from "../utils";
+import { BECH32_PREFIX_ACC_ADDR } from "../utils";
 
 const defaultCudosOptions: DirectSecp256k1HdWalletOptions = {
     bip39Password: "",
     hdPaths: [makeCosmoshubPath(0)],
-    prefix: ADDRESS_PREFIX,
+    prefix: BECH32_PREFIX_ACC_ADDR,
 }
 
 
