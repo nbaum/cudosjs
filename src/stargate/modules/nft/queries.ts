@@ -23,7 +23,7 @@ export interface NftExtension {
     readonly owner: (owner: string, denomId: string, pagination?: PageRequest) => Promise<QueryOwnerResponse>;
     readonly collection: (denomId: string, pagination?: PageRequest) => Promise<QueryCollectionResponse>;
     readonly denom: (denomId: string) => Promise<QueryDenomResponse>;
-    readonly denomByname: (denomName: string) => Promise<QueryDenomByNameResponse>;
+    readonly denomByName: (denomName: string) => Promise<QueryDenomByNameResponse>;
     readonly denomBySymbol: (symbol: string) => Promise<QueryDenomBySymbolResponse>;
     readonly denoms: (pagination?: PageRequest) => Promise<QueryDenomsResponse>;
     readonly nft: (denomId: string, tokenId: string) => Promise<QueryNFTResponse>;
@@ -50,7 +50,7 @@ export function setupNftExtension(base: QueryClient): NftExtension {
       denom: async (denomId: string) => {
         return queryService.Denom({ denomId });
       },
-      denomByname: async (denomName: string) => {
+      denomByName: async (denomName: string) => {
         return queryService.DenomByName({ denomName });
       },
       denomBySymbol: async (symbol: string) => {

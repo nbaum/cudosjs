@@ -3,8 +3,10 @@ import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { GroupExtension, setupGroupExtension } from "./modules/group/queries";
 import { QueryGroupInfoResponse } from "./modules/group/proto-types/query.pb";
 import { NftExtension, setupNftExtension } from "./modules/nft/queries";
-import { QueryCollectionResponse, QueryOwnerResponse, QuerySupplyResponse } from "./modules/nft/proto-types/query";
-import { isValidAddress, checkValidNftDenomId, checkValidAddress } from "../utils/checks";
+import { QueryApprovalsIsApprovedForAllResponse, QueryApprovalsNFTResponse, QueryCollectionResponse, QueryDenomByNameRequest, QueryDenomByNameResponse, QueryDenomBySymbolResponse, QueryDenomRequest, QueryDenomResponse, QueryDenomsResponse, QueryNFTResponse, QueryOwnerResponse, QuerySupplyResponse } from "./modules/nft/proto-types/query";
+import { checkValidNftDenomId, checkValidAddress } from "../utils/checks";
+import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
+
 import { SigningStargateClient } from ".";
 
 export class CudosStargateClient extends StargateClient {
@@ -42,8 +44,7 @@ export class CudosStargateClient extends StargateClient {
         return this.nftQueryClient.nft.supply(denomId, owner);
     }
 
-    //TODO: implement pagination
-    public async getNftOwner(owner: string, denomId?: string): Promise<QueryOwnerResponse> {
+    public async getNftOwner(owner: string, denomId?: string, pagination?: PageRequest): Promise<QueryOwnerResponse> {
         checkValidAddress(owner);
 
         if (denomId !== undefined) {
@@ -52,15 +53,65 @@ export class CudosStargateClient extends StargateClient {
             denomId = '';
         }
 
-        return this.nftQueryClient.nft.owner(owner, denomId);
+        return this.nftQueryClient.nft.owner(owner, denomId, pagination);
     }
 
-    //TODO: implement pagination
-    public async getNftCollection(denomId: string): Promise<QueryCollectionResponse> {
+    public async getNftCollection(denomId: string, pagination?: PageRequest): Promise<QueryCollectionResponse> {
         checkValidNftDenomId(denomId);
 
-        return this.nftQueryClient.nft.collection(denomId);
+        return this.nftQueryClient.nft.collection(denomId, pagination);
     }
 
+    public async getNftDenom(denomId: string): Promise<QueryDenomResponse> {
+        checkValidNftDenomId(denomId);
+
+        return this.nftQueryClient.nft.denom(denomId);
+    }
+
+    public async getNftDenoms(pagination?: PageRequest): Promise<QueryDenomsResponse> {
+        return this.nftQueryClient.nft.denoms(pagination);
+    }
+
+    public async getNftDenomByName(denomName: string): Promise<QueryDenomByNameResponse> {
+        if(denomName.length === 0){
+            throw Error("Name must be at lease one symbol");
+        }
+
+        return this.nftQueryClient.nft.denomByName(denomName);
+    }
+
+    public async getNftDenomBySymbol(symbol: string): Promise<QueryDenomBySymbolResponse> {
+        if(symbol.length === 0){
+            throw Error("Symbol must be at lease one symbol");
+        }
+
+        return this.nftQueryClient.nft.denomByName(symbol);
+    }
     
+    public async getNftToken(denomId: string, tokenId: string): Promise<QueryNFTResponse> {
+        checkValidNftDenomId(denomId);
+
+        if (tokenId.length === 0) {
+            throw Error("Token id must be at least 1 symbol long.");
+        }
+
+        return this.nftQueryClient.nft.nft(denomId, tokenId);
+    }
+
+    public async getNftApprovals(denomId: string, tokenId: string): Promise<QueryApprovalsNFTResponse> {
+        checkValidNftDenomId(denomId);
+
+        if (tokenId.length === 0) {
+            throw Error("Token id must be at least 1 symbol long.");
+        }
+
+        return this.nftQueryClient.nft.approvalsNft(denomId, tokenId);
+    }
+
+    public async nftIsApprovedForAll(owner: string, operator: string): Promise<QueryApprovalsIsApprovedForAllResponse> {
+        checkValidAddress(owner);
+        checkValidAddress(operator);
+
+        return this.nftQueryClient.nft.isApprovedForAll(owner, operator);
+    }
 }
