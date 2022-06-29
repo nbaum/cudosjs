@@ -2,6 +2,7 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry } from "../../../utils";
 import { GasPrice, StdFee } from "../../..";
 import { msgIssueDenom, msgTransferNft, msgApproveNft, msgApproveAllNft, msgRevokeNft, msgEditNFT, msgMintNFT, msgBurnNFT } from "./types";
+import { checkValidNftDenomId, checkValidAddress } from "../../../utils/checks";
 
 export class NftModule {
     private readonly _client: ClientSimulateFn
@@ -31,6 +32,21 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
+        checkValidNftDenomId(id);
+        checkValidAddress(sender);
+
+        if (name.length === 0){
+            throw Error("Invalid name");
+        }
+
+        if (schema.length === 0){
+            throw Error("Invalid schema");
+        }
+
+        if (symbol.length === 0){
+            throw Error("Invalid symbol");
+        }
+
         const msg = {
             typeUrl: msgIssueDenom.typeUrl,
             value: msgIssueDenom.type.fromPartial({
@@ -62,6 +78,15 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+        checkValidNftDenomId(denomId);
+        checkValidAddress(sender);
+        checkValidAddress(from);
+        checkValidAddress(to);
+
+        if (tokenId.length === 0){
+            throw Error("Invalid name");
+        }
+
         const msg = {
             typeUrl: msgTransferNft.typeUrl,
             value: msgTransferNft.type.fromPartial({
@@ -92,6 +117,14 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+        checkValidNftDenomId(denomId);
+        checkValidAddress(sender);
+        checkValidAddress(approvedAddress);
+
+        if (id.length === 0){
+            throw Error("Invalid name");
+        }
+
         const msg = {
             typeUrl: msgApproveNft.typeUrl,
             value: msgApproveNft.type.fromPartial({
@@ -120,6 +153,9 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+        checkValidAddress(sender);
+        checkValidAddress(operator);
+
         const msg = {
             typeUrl: msgApproveAllNft.typeUrl,
             value: msgApproveAllNft.type.fromPartial({
@@ -148,6 +184,14 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+        checkValidAddress(addressToRevoke);
+        checkValidAddress(sender);
+        checkValidNftDenomId(denomId);
+
+        if (tokenId.length === 0){
+            throw Error("Invalid name");
+        }
+
         const msg = {
             typeUrl: msgRevokeNft.typeUrl,
             value: msgRevokeNft.type.fromPartial({
@@ -179,6 +223,25 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+        checkValidAddress(sender);
+        checkValidNftDenomId(denomId);
+
+        if (id.length === 0) {
+            throw Error("Invalid tokenId");
+        }
+
+        if (name.length === 0) {
+            throw Error("Invalid name");
+        }
+
+        if (uri.length === 0) {
+            throw Error("Invalid uri");
+        }
+
+        if (data.length === 0) {
+            throw Error("Invalid data");
+        }
+
         const msg = {
             typeUrl: msgEditNFT.typeUrl,
             value: msgEditNFT.type.fromPartial({
@@ -212,6 +275,22 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+        checkValidAddress(sender);
+        checkValidAddress(recipient);
+        checkValidNftDenomId(denomId);
+
+        if (name.length === 0) {
+            throw Error("Invalid name");
+        }
+
+        if (uri.length === 0) {
+            throw Error("Invalid uri");
+        }
+
+        if (data.length === 0) {
+            throw Error("Invalid data");
+        }
+
         const msg = {
             typeUrl: msgMintNFT.typeUrl,
             value: msgMintNFT.type.fromPartial({
@@ -242,6 +321,13 @@ export class NftModule {
         gasMultiplier: number = 1.3,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+        checkValidAddress(sender);
+        checkValidNftDenomId(denomId);
+
+        if (id.length === 0) {
+            throw Error("Invalid tokenId");
+        }
+
         const msg = {
             typeUrl: msgBurnNFT.typeUrl,
             value: msgBurnNFT.type.fromPartial({
