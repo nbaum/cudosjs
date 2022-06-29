@@ -31,7 +31,8 @@
     "@cosmjs/crypto": "^0.28.4",
     "@cosmjs/proto-signing": "^0.28.4",
     "@cosmjs/stargate": "^0.28.4",
-    "@cosmjs/tendermint-rpc": "^0.28.4"
+    "@cosmjs/tendermint-rpc": "^0.28.4",
+    "bignumber.js": "^9.0.2"
   },
   "devDependencies": {
     "ts-loader": "^9.2.6",
