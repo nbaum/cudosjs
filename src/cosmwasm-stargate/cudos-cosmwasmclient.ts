@@ -1,7 +1,7 @@
 import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { Coin } from "@cosmjs/amino";
-import { ACUDOS } from "../utils";
+import { CURRENCY_DENOM } from "../utils";
 
 export class CudosCosmWasmClient extends CosmWasmClient {
 
@@ -14,7 +14,7 @@ export class CudosCosmWasmClient extends CosmWasmClient {
         super(tmClient);
       }
     
-      public override async getBalance(address: string, searchDenom: string = ACUDOS): Promise<Coin> {
+      public override async getBalance(address: string, searchDenom: string = CURRENCY_DENOM): Promise<Coin> {
         return this.forceGetQueryClient().bank.balance(address, searchDenom);
       }
 }
