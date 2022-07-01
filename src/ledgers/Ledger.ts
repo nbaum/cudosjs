@@ -1,9 +1,11 @@
 import BigNumber from 'bignumber.js';
+import { OfflineSigner } from 'src/proto-signing';
 
 export default abstract class Ledger {
 
     connected: boolean = false;
     accountAddress: string | null = null;
+    offlineSigner: OfflineSigner | null = null;
 
     abstract connect(): Promise < void >;
     abstract disconnect(): Promise < void >;
@@ -17,6 +19,7 @@ export default abstract class Ledger {
     init() {
         this.connected = false;
         this.accountAddress = null;
+        this.offlineSigner = null;
     }
 
 }

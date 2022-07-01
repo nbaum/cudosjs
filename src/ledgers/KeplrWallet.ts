@@ -7,7 +7,9 @@ declare let fetch: (url: string) => Promise < any >;
 
 declare let window: {
     keplr: any;
-    getOfflineSigner: any
+    getOfflineSigner: any;
+    addEventListener: (eventName: string, callback: () => void) => void;
+    removeEventListener: (eventName: string, callback: () => void) => void;
 }
 
 export interface KeplrWalletConfig {
@@ -22,7 +24,7 @@ export interface KeplrWalletConfig {
 export class KeplrWallet extends Ledger {
 
     keplrWalletConfig: KeplrWalletConfig;
-
+    
     constructor(keplrWalletConfig: KeplrWalletConfig) {
         super();
         this.keplrWalletConfig = keplrWalletConfig;
@@ -132,17 +134,24 @@ export class KeplrWallet extends Ledger {
 
             const offlineSigner = window.getOfflineSigner(this.keplrWalletConfig.CHAIN_ID);
 
+            this.offlineSigner = offlineSigner;
             this.accountAddress = (await offlineSigner.getAccounts())[0].address;
             this.connected = true;
+            // this.network = await offlineSigner.get
+
+            window.addEventListener("keplr_keystorechange", this.accountChangeEventListener);
+
         } catch (error) {
             throw new Error('Failed to connect to Keplr!');
         }
+
 
     }
 
     async disconnect(): Promise < void > {
         return new Promise < void >((resolve, reject) => {
             this.init();
+            window.removeEventListener('keplr_keystorechange', this.accountChangeEventListener);
             resolve();
         });
     }
@@ -164,5 +173,11 @@ export class KeplrWallet extends Ledger {
 
     isConnected(): boolean {
         return this.connected === true;
+    }
+
+    async accountChangeEventListener(): Promise < void > {
+        if (this.offlineSigner !== null) {
+            this.accountAddress = (await this.offlineSigner.getAccounts())[0].address;
+        }
     }
 }
