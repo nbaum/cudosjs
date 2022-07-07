@@ -2,7 +2,7 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry } from "../../../utils";
 import { GasPrice, StdFee } from "../..";
 import { MsgCreateGroupWithPolicy } from "./proto-types/tx.pb";
-import { ThresholdDecisionPolicy, MemberRequest } from "./proto-types/types.pb";
+import { ThresholdDecisionPolicy, Member } from "./proto-types/types.pb";
 import { msgCreateGroupWithPolicy, msgSubmitProposal, thresholdDecisionPolicy } from "./types";
 
 export class GroupModule {
@@ -25,7 +25,6 @@ export class GroupModule {
         }[],
         groupMetadata: string,
         groupPolicyMetadata: string,
-        groupPolicyAsAdmin: boolean,
         decisionPolicy: {
             threshold: number,
             votingPeriod: number,
@@ -38,12 +37,12 @@ export class GroupModule {
         const threshold = ThresholdDecisionPolicy.fromPartial({
             threshold: decisionPolicy.threshold.toString(),
             windows: {
-                votingPeriod: { seconds: decisionPolicy.votingPeriod },
-                minExecutionPeriod: { seconds: decisionPolicy.minExecutionPeriod },
+                voting_period: { seconds: decisionPolicy.votingPeriod },
+                min_execution_period: { seconds: decisionPolicy.minExecutionPeriod },
             }
         });
 
-        const membersEncoded = members.map(m => MemberRequest.fromPartial({
+        const membersEncoded = members.map(m => Member.fromPartial({
             address: m.address,
             weight: m.weight.toString(),
             metadata: m.metadata,
@@ -54,11 +53,11 @@ export class GroupModule {
             value: MsgCreateGroupWithPolicy.fromPartial({
                 admin: admin,
                 members: membersEncoded,
-                groupMetadata: groupMetadata,
-                groupPolicyMetadata: groupPolicyMetadata,
-                groupPolicyAsAdmin: groupPolicyAsAdmin,
-                decisionPolicy: {
-                    typeUrl: thresholdDecisionPolicy.typeUrl,
+                group_metadata: groupMetadata,
+                group_policy_metadata: groupPolicyMetadata,
+                group_policy_as_admin: true,
+                decision_policy: {
+                    type_url: thresholdDecisionPolicy.typeUrl,
                     value: ThresholdDecisionPolicy.encode(threshold).finish()
                 },
             }),

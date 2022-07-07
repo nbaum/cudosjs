@@ -28,7 +28,7 @@ export function setupGroupExtension(base: QueryClient): GroupExtension {
   return {
     group: {
       groupInfo: async (groupId: number) => {
-        return queryService.GroupInfo({ groupId: Long.fromNumber(groupId) });
+        return queryService.GroupInfo({ group_id: groupId });
       }
     },
   };

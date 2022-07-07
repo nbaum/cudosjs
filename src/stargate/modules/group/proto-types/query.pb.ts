@@ -1,30 +1,31 @@
 /* eslint-disable */
 import Long from "long";
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal";
 import {
   GroupInfo,
   GroupPolicyInfo,
+  GroupMember,
   Proposal,
   Vote,
   TallyResult,
-  GroupMember,
 } from "./types.pb";
-import { PageRequest, PageResponse } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
+import {
+  PageRequest,
+  PageResponse,
+} from "./pagination";
 
 export const protobufPackage = "cosmos.group.v1";
-
-/** Since: cosmos-sdk 0.46 */
 
 /** QueryGroupInfoRequest is the Query/GroupInfo request type. */
 export interface QueryGroupInfoRequest {
   /** group_id is the unique ID of the group. */
-  groupId: Long;
+  group_id: number;
 }
 
 /** QueryGroupInfoResponse is the Query/GroupInfo response type. */
 export interface QueryGroupInfoResponse {
   /** info is the GroupInfo for the group. */
-  info?: GroupInfo;
+  info: GroupInfo | undefined;
 }
 
 /** QueryGroupPolicyInfoRequest is the Query/GroupPolicyInfo request type. */
@@ -36,15 +37,15 @@ export interface QueryGroupPolicyInfoRequest {
 /** QueryGroupPolicyInfoResponse is the Query/GroupPolicyInfo response type. */
 export interface QueryGroupPolicyInfoResponse {
   /** info is the GroupPolicyInfo for the group policy. */
-  info?: GroupPolicyInfo;
+  info: GroupPolicyInfo | undefined;
 }
 
 /** QueryGroupMembersRequest is the Query/GroupMembers request type. */
 export interface QueryGroupMembersRequest {
   /** group_id is the unique ID of the group. */
-  groupId: Long;
+  group_id: number;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryGroupMembersResponse is the Query/GroupMembersResponse response type. */
@@ -52,7 +53,7 @@ export interface QueryGroupMembersResponse {
   /** members are the members of the group with given group_id. */
   members: GroupMember[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryGroupsByAdminRequest is the Query/GroupsByAdmin request type. */
@@ -60,7 +61,7 @@ export interface QueryGroupsByAdminRequest {
   /** admin is the account address of a group's admin. */
   admin: string;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryGroupsByAdminResponse is the Query/GroupsByAdminResponse response type. */
@@ -68,23 +69,23 @@ export interface QueryGroupsByAdminResponse {
   /** groups are the groups info with the provided admin. */
   groups: GroupInfo[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryGroupPoliciesByGroupRequest is the Query/GroupPoliciesByGroup request type. */
 export interface QueryGroupPoliciesByGroupRequest {
   /** group_id is the unique ID of the group policy's group. */
-  groupId: Long;
+  group_id: number;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryGroupPoliciesByGroupResponse is the Query/GroupPoliciesByGroup response type. */
 export interface QueryGroupPoliciesByGroupResponse {
   /** group_policies are the group policies info associated with the provided group. */
-  groupPolicies: GroupPolicyInfo[];
+  group_policies: GroupPolicyInfo[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryGroupPoliciesByAdminRequest is the Query/GroupPoliciesByAdmin request type. */
@@ -92,27 +93,27 @@ export interface QueryGroupPoliciesByAdminRequest {
   /** admin is the admin address of the group policy. */
   admin: string;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryGroupPoliciesByAdminResponse is the Query/GroupPoliciesByAdmin response type. */
 export interface QueryGroupPoliciesByAdminResponse {
   /** group_policies are the group policies info with provided admin. */
-  groupPolicies: GroupPolicyInfo[];
+  group_policies: GroupPolicyInfo[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryProposalRequest is the Query/Proposal request type. */
 export interface QueryProposalRequest {
   /** proposal_id is the unique ID of a proposal. */
-  proposalId: Long;
+  proposal_id: number;
 }
 
 /** QueryProposalResponse is the Query/Proposal response type. */
 export interface QueryProposalResponse {
   /** proposal is the proposal info. */
-  proposal?: Proposal;
+  proposal: Proposal | undefined;
 }
 
 /** QueryProposalsByGroupPolicyRequest is the Query/ProposalByGroupPolicy request type. */
@@ -120,7 +121,7 @@ export interface QueryProposalsByGroupPolicyRequest {
   /** address is the account address of the group policy related to proposals. */
   address: string;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryProposalsByGroupPolicyResponse is the Query/ProposalByGroupPolicy response type. */
@@ -128,13 +129,13 @@ export interface QueryProposalsByGroupPolicyResponse {
   /** proposals are the proposals with given group policy. */
   proposals: Proposal[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryVoteByProposalVoterRequest is the Query/VoteByProposalVoter request type. */
 export interface QueryVoteByProposalVoterRequest {
   /** proposal_id is the unique ID of a proposal. */
-  proposalId: Long;
+  proposal_id: number;
   /** voter is a proposal voter account address. */
   voter: string;
 }
@@ -142,15 +143,15 @@ export interface QueryVoteByProposalVoterRequest {
 /** QueryVoteByProposalVoterResponse is the Query/VoteByProposalVoter response type. */
 export interface QueryVoteByProposalVoterResponse {
   /** vote is the vote with given proposal_id and voter. */
-  vote?: Vote;
+  vote: Vote | undefined;
 }
 
 /** QueryVotesByProposalRequest is the Query/VotesByProposal request type. */
 export interface QueryVotesByProposalRequest {
   /** proposal_id is the unique ID of a proposal. */
-  proposalId: Long;
+  proposal_id: number;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryVotesByProposalResponse is the Query/VotesByProposal response type. */
@@ -158,7 +159,7 @@ export interface QueryVotesByProposalResponse {
   /** votes are the list of votes for given proposal_id. */
   votes: Vote[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryVotesByVoterRequest is the Query/VotesByVoter request type. */
@@ -166,7 +167,7 @@ export interface QueryVotesByVoterRequest {
   /** voter is a proposal voter account address. */
   voter: string;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryVotesByVoterResponse is the Query/VotesByVoter response type. */
@@ -174,7 +175,7 @@ export interface QueryVotesByVoterResponse {
   /** votes are the list of votes by given voter. */
   votes: Vote[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryGroupsByMemberRequest is the Query/GroupsByMember request type. */
@@ -182,7 +183,7 @@ export interface QueryGroupsByMemberRequest {
   /** address is the group member address. */
   address: string;
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest | undefined;
 }
 
 /** QueryGroupsByMemberResponse is the Query/GroupsByMember response type. */
@@ -190,32 +191,30 @@ export interface QueryGroupsByMemberResponse {
   /** groups are the groups info with the provided group member. */
   groups: GroupInfo[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse | undefined;
 }
 
 /** QueryTallyResultRequest is the Query/TallyResult request type. */
 export interface QueryTallyResultRequest {
   /** proposal_id is the unique id of a proposal. */
-  proposalId: Long;
+  proposal_id: number;
 }
 
 /** QueryTallyResultResponse is the Query/TallyResult response type. */
 export interface QueryTallyResultResponse {
   /** tally defines the requested tally. */
-  tally?: TallyResult;
+  tally: TallyResult | undefined;
 }
 
-function createBaseQueryGroupInfoRequest(): QueryGroupInfoRequest {
-  return { groupId: Long.UZERO };
-}
+const baseQueryGroupInfoRequest: object = { group_id: 0 };
 
 export const QueryGroupInfoRequest = {
   encode(
     message: QueryGroupInfoRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (!message.groupId.isZero()) {
-      writer.uint32(8).uint64(message.groupId);
+    if (message.group_id !== 0) {
+      writer.uint32(8).uint64(message.group_id);
     }
     return writer;
   },
@@ -226,12 +225,12 @@ export const QueryGroupInfoRequest = {
   ): QueryGroupInfoRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupInfoRequest();
+    const message = { ...baseQueryGroupInfoRequest } as QueryGroupInfoRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.groupId = reader.uint64() as Long;
+          message.group_id = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -242,35 +241,31 @@ export const QueryGroupInfoRequest = {
   },
 
   fromJSON(object: any): QueryGroupInfoRequest {
-    return {
-      groupId: isSet(object.groupId)
-        ? Long.fromValue(object.groupId)
-        : Long.UZERO,
-    };
+    const message = { ...baseQueryGroupInfoRequest } as QueryGroupInfoRequest;
+    message.group_id =
+      object.group_id !== undefined && object.group_id !== null
+        ? Number(object.group_id)
+        : 0;
+    return message;
   },
 
   toJSON(message: QueryGroupInfoRequest): unknown {
     const obj: any = {};
-    message.groupId !== undefined &&
-      (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.group_id !== undefined &&
+      (obj.group_id = Math.round(message.group_id));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryGroupInfoRequest>, I>>(
     object: I
   ): QueryGroupInfoRequest {
-    const message = createBaseQueryGroupInfoRequest();
-    message.groupId =
-      object.groupId !== undefined && object.groupId !== null
-        ? Long.fromValue(object.groupId)
-        : Long.UZERO;
+    const message = { ...baseQueryGroupInfoRequest } as QueryGroupInfoRequest;
+    message.group_id = object.group_id ?? 0;
     return message;
   },
 };
 
-function createBaseQueryGroupInfoResponse(): QueryGroupInfoResponse {
-  return { info: undefined };
-}
+const baseQueryGroupInfoResponse: object = {};
 
 export const QueryGroupInfoResponse = {
   encode(
@@ -289,7 +284,7 @@ export const QueryGroupInfoResponse = {
   ): QueryGroupInfoResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupInfoResponse();
+    const message = { ...baseQueryGroupInfoResponse } as QueryGroupInfoResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -305,9 +300,12 @@ export const QueryGroupInfoResponse = {
   },
 
   fromJSON(object: any): QueryGroupInfoResponse {
-    return {
-      info: isSet(object.info) ? GroupInfo.fromJSON(object.info) : undefined,
-    };
+    const message = { ...baseQueryGroupInfoResponse } as QueryGroupInfoResponse;
+    message.info =
+      object.info !== undefined && object.info !== null
+        ? GroupInfo.fromJSON(object.info)
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupInfoResponse): unknown {
@@ -320,7 +318,7 @@ export const QueryGroupInfoResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupInfoResponse>, I>>(
     object: I
   ): QueryGroupInfoResponse {
-    const message = createBaseQueryGroupInfoResponse();
+    const message = { ...baseQueryGroupInfoResponse } as QueryGroupInfoResponse;
     message.info =
       object.info !== undefined && object.info !== null
         ? GroupInfo.fromPartial(object.info)
@@ -329,9 +327,7 @@ export const QueryGroupInfoResponse = {
   },
 };
 
-function createBaseQueryGroupPolicyInfoRequest(): QueryGroupPolicyInfoRequest {
-  return { address: "" };
-}
+const baseQueryGroupPolicyInfoRequest: object = { address: "" };
 
 export const QueryGroupPolicyInfoRequest = {
   encode(
@@ -350,7 +346,9 @@ export const QueryGroupPolicyInfoRequest = {
   ): QueryGroupPolicyInfoRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupPolicyInfoRequest();
+    const message = {
+      ...baseQueryGroupPolicyInfoRequest,
+    } as QueryGroupPolicyInfoRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -366,9 +364,14 @@ export const QueryGroupPolicyInfoRequest = {
   },
 
   fromJSON(object: any): QueryGroupPolicyInfoRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-    };
+    const message = {
+      ...baseQueryGroupPolicyInfoRequest,
+    } as QueryGroupPolicyInfoRequest;
+    message.address =
+      object.address !== undefined && object.address !== null
+        ? String(object.address)
+        : "";
+    return message;
   },
 
   toJSON(message: QueryGroupPolicyInfoRequest): unknown {
@@ -380,15 +383,15 @@ export const QueryGroupPolicyInfoRequest = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupPolicyInfoRequest>, I>>(
     object: I
   ): QueryGroupPolicyInfoRequest {
-    const message = createBaseQueryGroupPolicyInfoRequest();
+    const message = {
+      ...baseQueryGroupPolicyInfoRequest,
+    } as QueryGroupPolicyInfoRequest;
     message.address = object.address ?? "";
     return message;
   },
 };
 
-function createBaseQueryGroupPolicyInfoResponse(): QueryGroupPolicyInfoResponse {
-  return { info: undefined };
-}
+const baseQueryGroupPolicyInfoResponse: object = {};
 
 export const QueryGroupPolicyInfoResponse = {
   encode(
@@ -407,7 +410,9 @@ export const QueryGroupPolicyInfoResponse = {
   ): QueryGroupPolicyInfoResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupPolicyInfoResponse();
+    const message = {
+      ...baseQueryGroupPolicyInfoResponse,
+    } as QueryGroupPolicyInfoResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -423,11 +428,14 @@ export const QueryGroupPolicyInfoResponse = {
   },
 
   fromJSON(object: any): QueryGroupPolicyInfoResponse {
-    return {
-      info: isSet(object.info)
+    const message = {
+      ...baseQueryGroupPolicyInfoResponse,
+    } as QueryGroupPolicyInfoResponse;
+    message.info =
+      object.info !== undefined && object.info !== null
         ? GroupPolicyInfo.fromJSON(object.info)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupPolicyInfoResponse): unknown {
@@ -442,7 +450,9 @@ export const QueryGroupPolicyInfoResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupPolicyInfoResponse>, I>>(
     object: I
   ): QueryGroupPolicyInfoResponse {
-    const message = createBaseQueryGroupPolicyInfoResponse();
+    const message = {
+      ...baseQueryGroupPolicyInfoResponse,
+    } as QueryGroupPolicyInfoResponse;
     message.info =
       object.info !== undefined && object.info !== null
         ? GroupPolicyInfo.fromPartial(object.info)
@@ -451,17 +461,15 @@ export const QueryGroupPolicyInfoResponse = {
   },
 };
 
-function createBaseQueryGroupMembersRequest(): QueryGroupMembersRequest {
-  return { groupId: Long.UZERO, pagination: undefined };
-}
+const baseQueryGroupMembersRequest: object = { group_id: 0 };
 
 export const QueryGroupMembersRequest = {
   encode(
     message: QueryGroupMembersRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (!message.groupId.isZero()) {
-      writer.uint32(8).uint64(message.groupId);
+    if (message.group_id !== 0) {
+      writer.uint32(8).uint64(message.group_id);
     }
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -475,12 +483,14 @@ export const QueryGroupMembersRequest = {
   ): QueryGroupMembersRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupMembersRequest();
+    const message = {
+      ...baseQueryGroupMembersRequest,
+    } as QueryGroupMembersRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.groupId = reader.uint64() as Long;
+          message.group_id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -494,20 +504,24 @@ export const QueryGroupMembersRequest = {
   },
 
   fromJSON(object: any): QueryGroupMembersRequest {
-    return {
-      groupId: isSet(object.groupId)
-        ? Long.fromValue(object.groupId)
-        : Long.UZERO,
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupMembersRequest,
+    } as QueryGroupMembersRequest;
+    message.group_id =
+      object.group_id !== undefined && object.group_id !== null
+        ? Number(object.group_id)
+        : 0;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupMembersRequest): unknown {
     const obj: any = {};
-    message.groupId !== undefined &&
-      (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.group_id !== undefined &&
+      (obj.group_id = Math.round(message.group_id));
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
         ? PageRequest.toJSON(message.pagination)
@@ -518,11 +532,10 @@ export const QueryGroupMembersRequest = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupMembersRequest>, I>>(
     object: I
   ): QueryGroupMembersRequest {
-    const message = createBaseQueryGroupMembersRequest();
-    message.groupId =
-      object.groupId !== undefined && object.groupId !== null
-        ? Long.fromValue(object.groupId)
-        : Long.UZERO;
+    const message = {
+      ...baseQueryGroupMembersRequest,
+    } as QueryGroupMembersRequest;
+    message.group_id = object.group_id ?? 0;
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromPartial(object.pagination)
@@ -531,9 +544,7 @@ export const QueryGroupMembersRequest = {
   },
 };
 
-function createBaseQueryGroupMembersResponse(): QueryGroupMembersResponse {
-  return { members: [], pagination: undefined };
-}
+const baseQueryGroupMembersResponse: object = {};
 
 export const QueryGroupMembersResponse = {
   encode(
@@ -558,7 +569,10 @@ export const QueryGroupMembersResponse = {
   ): QueryGroupMembersResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupMembersResponse();
+    const message = {
+      ...baseQueryGroupMembersResponse,
+    } as QueryGroupMembersResponse;
+    message.members = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -577,14 +591,17 @@ export const QueryGroupMembersResponse = {
   },
 
   fromJSON(object: any): QueryGroupMembersResponse {
-    return {
-      members: Array.isArray(object?.members)
-        ? object.members.map((e: any) => GroupMember.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupMembersResponse,
+    } as QueryGroupMembersResponse;
+    message.members = (object.members ?? []).map((e: any) =>
+      GroupMember.fromJSON(e)
+    );
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupMembersResponse): unknown {
@@ -606,7 +623,9 @@ export const QueryGroupMembersResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupMembersResponse>, I>>(
     object: I
   ): QueryGroupMembersResponse {
-    const message = createBaseQueryGroupMembersResponse();
+    const message = {
+      ...baseQueryGroupMembersResponse,
+    } as QueryGroupMembersResponse;
     message.members =
       object.members?.map((e) => GroupMember.fromPartial(e)) || [];
     message.pagination =
@@ -617,9 +636,7 @@ export const QueryGroupMembersResponse = {
   },
 };
 
-function createBaseQueryGroupsByAdminRequest(): QueryGroupsByAdminRequest {
-  return { admin: "", pagination: undefined };
-}
+const baseQueryGroupsByAdminRequest: object = { admin: "" };
 
 export const QueryGroupsByAdminRequest = {
   encode(
@@ -641,7 +658,9 @@ export const QueryGroupsByAdminRequest = {
   ): QueryGroupsByAdminRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupsByAdminRequest();
+    const message = {
+      ...baseQueryGroupsByAdminRequest,
+    } as QueryGroupsByAdminRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -660,12 +679,18 @@ export const QueryGroupsByAdminRequest = {
   },
 
   fromJSON(object: any): QueryGroupsByAdminRequest {
-    return {
-      admin: isSet(object.admin) ? String(object.admin) : "",
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupsByAdminRequest,
+    } as QueryGroupsByAdminRequest;
+    message.admin =
+      object.admin !== undefined && object.admin !== null
+        ? String(object.admin)
+        : "";
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupsByAdminRequest): unknown {
@@ -681,7 +706,9 @@ export const QueryGroupsByAdminRequest = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupsByAdminRequest>, I>>(
     object: I
   ): QueryGroupsByAdminRequest {
-    const message = createBaseQueryGroupsByAdminRequest();
+    const message = {
+      ...baseQueryGroupsByAdminRequest,
+    } as QueryGroupsByAdminRequest;
     message.admin = object.admin ?? "";
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -691,9 +718,7 @@ export const QueryGroupsByAdminRequest = {
   },
 };
 
-function createBaseQueryGroupsByAdminResponse(): QueryGroupsByAdminResponse {
-  return { groups: [], pagination: undefined };
-}
+const baseQueryGroupsByAdminResponse: object = {};
 
 export const QueryGroupsByAdminResponse = {
   encode(
@@ -718,7 +743,10 @@ export const QueryGroupsByAdminResponse = {
   ): QueryGroupsByAdminResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupsByAdminResponse();
+    const message = {
+      ...baseQueryGroupsByAdminResponse,
+    } as QueryGroupsByAdminResponse;
+    message.groups = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -737,14 +765,17 @@ export const QueryGroupsByAdminResponse = {
   },
 
   fromJSON(object: any): QueryGroupsByAdminResponse {
-    return {
-      groups: Array.isArray(object?.groups)
-        ? object.groups.map((e: any) => GroupInfo.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupsByAdminResponse,
+    } as QueryGroupsByAdminResponse;
+    message.groups = (object.groups ?? []).map((e: any) =>
+      GroupInfo.fromJSON(e)
+    );
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupsByAdminResponse): unknown {
@@ -766,7 +797,9 @@ export const QueryGroupsByAdminResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupsByAdminResponse>, I>>(
     object: I
   ): QueryGroupsByAdminResponse {
-    const message = createBaseQueryGroupsByAdminResponse();
+    const message = {
+      ...baseQueryGroupsByAdminResponse,
+    } as QueryGroupsByAdminResponse;
     message.groups = object.groups?.map((e) => GroupInfo.fromPartial(e)) || [];
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -776,17 +809,15 @@ export const QueryGroupsByAdminResponse = {
   },
 };
 
-function createBaseQueryGroupPoliciesByGroupRequest(): QueryGroupPoliciesByGroupRequest {
-  return { groupId: Long.UZERO, pagination: undefined };
-}
+const baseQueryGroupPoliciesByGroupRequest: object = { group_id: 0 };
 
 export const QueryGroupPoliciesByGroupRequest = {
   encode(
     message: QueryGroupPoliciesByGroupRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (!message.groupId.isZero()) {
-      writer.uint32(8).uint64(message.groupId);
+    if (message.group_id !== 0) {
+      writer.uint32(8).uint64(message.group_id);
     }
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -800,12 +831,14 @@ export const QueryGroupPoliciesByGroupRequest = {
   ): QueryGroupPoliciesByGroupRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupPoliciesByGroupRequest();
+    const message = {
+      ...baseQueryGroupPoliciesByGroupRequest,
+    } as QueryGroupPoliciesByGroupRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.groupId = reader.uint64() as Long;
+          message.group_id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -819,20 +852,24 @@ export const QueryGroupPoliciesByGroupRequest = {
   },
 
   fromJSON(object: any): QueryGroupPoliciesByGroupRequest {
-    return {
-      groupId: isSet(object.groupId)
-        ? Long.fromValue(object.groupId)
-        : Long.UZERO,
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupPoliciesByGroupRequest,
+    } as QueryGroupPoliciesByGroupRequest;
+    message.group_id =
+      object.group_id !== undefined && object.group_id !== null
+        ? Number(object.group_id)
+        : 0;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupPoliciesByGroupRequest): unknown {
     const obj: any = {};
-    message.groupId !== undefined &&
-      (obj.groupId = (message.groupId || Long.UZERO).toString());
+    message.group_id !== undefined &&
+      (obj.group_id = Math.round(message.group_id));
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
         ? PageRequest.toJSON(message.pagination)
@@ -843,11 +880,10 @@ export const QueryGroupPoliciesByGroupRequest = {
   fromPartial<
     I extends Exact<DeepPartial<QueryGroupPoliciesByGroupRequest>, I>
   >(object: I): QueryGroupPoliciesByGroupRequest {
-    const message = createBaseQueryGroupPoliciesByGroupRequest();
-    message.groupId =
-      object.groupId !== undefined && object.groupId !== null
-        ? Long.fromValue(object.groupId)
-        : Long.UZERO;
+    const message = {
+      ...baseQueryGroupPoliciesByGroupRequest,
+    } as QueryGroupPoliciesByGroupRequest;
+    message.group_id = object.group_id ?? 0;
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromPartial(object.pagination)
@@ -856,16 +892,14 @@ export const QueryGroupPoliciesByGroupRequest = {
   },
 };
 
-function createBaseQueryGroupPoliciesByGroupResponse(): QueryGroupPoliciesByGroupResponse {
-  return { groupPolicies: [], pagination: undefined };
-}
+const baseQueryGroupPoliciesByGroupResponse: object = {};
 
 export const QueryGroupPoliciesByGroupResponse = {
   encode(
     message: QueryGroupPoliciesByGroupResponse,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    for (const v of message.groupPolicies) {
+    for (const v of message.group_policies) {
       GroupPolicyInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.pagination !== undefined) {
@@ -883,12 +917,15 @@ export const QueryGroupPoliciesByGroupResponse = {
   ): QueryGroupPoliciesByGroupResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupPoliciesByGroupResponse();
+    const message = {
+      ...baseQueryGroupPoliciesByGroupResponse,
+    } as QueryGroupPoliciesByGroupResponse;
+    message.group_policies = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.groupPolicies.push(
+          message.group_policies.push(
             GroupPolicyInfo.decode(reader, reader.uint32())
           );
           break;
@@ -904,24 +941,27 @@ export const QueryGroupPoliciesByGroupResponse = {
   },
 
   fromJSON(object: any): QueryGroupPoliciesByGroupResponse {
-    return {
-      groupPolicies: Array.isArray(object?.groupPolicies)
-        ? object.groupPolicies.map((e: any) => GroupPolicyInfo.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupPoliciesByGroupResponse,
+    } as QueryGroupPoliciesByGroupResponse;
+    message.group_policies = (object.group_policies ?? []).map((e: any) =>
+      GroupPolicyInfo.fromJSON(e)
+    );
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupPoliciesByGroupResponse): unknown {
     const obj: any = {};
-    if (message.groupPolicies) {
-      obj.groupPolicies = message.groupPolicies.map((e) =>
+    if (message.group_policies) {
+      obj.group_policies = message.group_policies.map((e) =>
         e ? GroupPolicyInfo.toJSON(e) : undefined
       );
     } else {
-      obj.groupPolicies = [];
+      obj.group_policies = [];
     }
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
@@ -933,9 +973,11 @@ export const QueryGroupPoliciesByGroupResponse = {
   fromPartial<
     I extends Exact<DeepPartial<QueryGroupPoliciesByGroupResponse>, I>
   >(object: I): QueryGroupPoliciesByGroupResponse {
-    const message = createBaseQueryGroupPoliciesByGroupResponse();
-    message.groupPolicies =
-      object.groupPolicies?.map((e) => GroupPolicyInfo.fromPartial(e)) || [];
+    const message = {
+      ...baseQueryGroupPoliciesByGroupResponse,
+    } as QueryGroupPoliciesByGroupResponse;
+    message.group_policies =
+      object.group_policies?.map((e) => GroupPolicyInfo.fromPartial(e)) || [];
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromPartial(object.pagination)
@@ -944,9 +986,7 @@ export const QueryGroupPoliciesByGroupResponse = {
   },
 };
 
-function createBaseQueryGroupPoliciesByAdminRequest(): QueryGroupPoliciesByAdminRequest {
-  return { admin: "", pagination: undefined };
-}
+const baseQueryGroupPoliciesByAdminRequest: object = { admin: "" };
 
 export const QueryGroupPoliciesByAdminRequest = {
   encode(
@@ -968,7 +1008,9 @@ export const QueryGroupPoliciesByAdminRequest = {
   ): QueryGroupPoliciesByAdminRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupPoliciesByAdminRequest();
+    const message = {
+      ...baseQueryGroupPoliciesByAdminRequest,
+    } as QueryGroupPoliciesByAdminRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -987,12 +1029,18 @@ export const QueryGroupPoliciesByAdminRequest = {
   },
 
   fromJSON(object: any): QueryGroupPoliciesByAdminRequest {
-    return {
-      admin: isSet(object.admin) ? String(object.admin) : "",
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupPoliciesByAdminRequest,
+    } as QueryGroupPoliciesByAdminRequest;
+    message.admin =
+      object.admin !== undefined && object.admin !== null
+        ? String(object.admin)
+        : "";
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupPoliciesByAdminRequest): unknown {
@@ -1008,7 +1056,9 @@ export const QueryGroupPoliciesByAdminRequest = {
   fromPartial<
     I extends Exact<DeepPartial<QueryGroupPoliciesByAdminRequest>, I>
   >(object: I): QueryGroupPoliciesByAdminRequest {
-    const message = createBaseQueryGroupPoliciesByAdminRequest();
+    const message = {
+      ...baseQueryGroupPoliciesByAdminRequest,
+    } as QueryGroupPoliciesByAdminRequest;
     message.admin = object.admin ?? "";
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -1018,16 +1068,14 @@ export const QueryGroupPoliciesByAdminRequest = {
   },
 };
 
-function createBaseQueryGroupPoliciesByAdminResponse(): QueryGroupPoliciesByAdminResponse {
-  return { groupPolicies: [], pagination: undefined };
-}
+const baseQueryGroupPoliciesByAdminResponse: object = {};
 
 export const QueryGroupPoliciesByAdminResponse = {
   encode(
     message: QueryGroupPoliciesByAdminResponse,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    for (const v of message.groupPolicies) {
+    for (const v of message.group_policies) {
       GroupPolicyInfo.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     if (message.pagination !== undefined) {
@@ -1045,12 +1093,15 @@ export const QueryGroupPoliciesByAdminResponse = {
   ): QueryGroupPoliciesByAdminResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupPoliciesByAdminResponse();
+    const message = {
+      ...baseQueryGroupPoliciesByAdminResponse,
+    } as QueryGroupPoliciesByAdminResponse;
+    message.group_policies = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.groupPolicies.push(
+          message.group_policies.push(
             GroupPolicyInfo.decode(reader, reader.uint32())
           );
           break;
@@ -1066,24 +1117,27 @@ export const QueryGroupPoliciesByAdminResponse = {
   },
 
   fromJSON(object: any): QueryGroupPoliciesByAdminResponse {
-    return {
-      groupPolicies: Array.isArray(object?.groupPolicies)
-        ? object.groupPolicies.map((e: any) => GroupPolicyInfo.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupPoliciesByAdminResponse,
+    } as QueryGroupPoliciesByAdminResponse;
+    message.group_policies = (object.group_policies ?? []).map((e: any) =>
+      GroupPolicyInfo.fromJSON(e)
+    );
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupPoliciesByAdminResponse): unknown {
     const obj: any = {};
-    if (message.groupPolicies) {
-      obj.groupPolicies = message.groupPolicies.map((e) =>
+    if (message.group_policies) {
+      obj.group_policies = message.group_policies.map((e) =>
         e ? GroupPolicyInfo.toJSON(e) : undefined
       );
     } else {
-      obj.groupPolicies = [];
+      obj.group_policies = [];
     }
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
@@ -1095,9 +1149,11 @@ export const QueryGroupPoliciesByAdminResponse = {
   fromPartial<
     I extends Exact<DeepPartial<QueryGroupPoliciesByAdminResponse>, I>
   >(object: I): QueryGroupPoliciesByAdminResponse {
-    const message = createBaseQueryGroupPoliciesByAdminResponse();
-    message.groupPolicies =
-      object.groupPolicies?.map((e) => GroupPolicyInfo.fromPartial(e)) || [];
+    const message = {
+      ...baseQueryGroupPoliciesByAdminResponse,
+    } as QueryGroupPoliciesByAdminResponse;
+    message.group_policies =
+      object.group_policies?.map((e) => GroupPolicyInfo.fromPartial(e)) || [];
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromPartial(object.pagination)
@@ -1106,17 +1162,15 @@ export const QueryGroupPoliciesByAdminResponse = {
   },
 };
 
-function createBaseQueryProposalRequest(): QueryProposalRequest {
-  return { proposalId: Long.UZERO };
-}
+const baseQueryProposalRequest: object = { proposal_id: 0 };
 
 export const QueryProposalRequest = {
   encode(
     message: QueryProposalRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (!message.proposalId.isZero()) {
-      writer.uint32(8).uint64(message.proposalId);
+    if (message.proposal_id !== 0) {
+      writer.uint32(8).uint64(message.proposal_id);
     }
     return writer;
   },
@@ -1127,12 +1181,12 @@ export const QueryProposalRequest = {
   ): QueryProposalRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryProposalRequest();
+    const message = { ...baseQueryProposalRequest } as QueryProposalRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proposalId = reader.uint64() as Long;
+          message.proposal_id = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -1143,35 +1197,31 @@ export const QueryProposalRequest = {
   },
 
   fromJSON(object: any): QueryProposalRequest {
-    return {
-      proposalId: isSet(object.proposalId)
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO,
-    };
+    const message = { ...baseQueryProposalRequest } as QueryProposalRequest;
+    message.proposal_id =
+      object.proposal_id !== undefined && object.proposal_id !== null
+        ? Number(object.proposal_id)
+        : 0;
+    return message;
   },
 
   toJSON(message: QueryProposalRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined &&
-      (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.proposal_id !== undefined &&
+      (obj.proposal_id = Math.round(message.proposal_id));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryProposalRequest>, I>>(
     object: I
   ): QueryProposalRequest {
-    const message = createBaseQueryProposalRequest();
-    message.proposalId =
-      object.proposalId !== undefined && object.proposalId !== null
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO;
+    const message = { ...baseQueryProposalRequest } as QueryProposalRequest;
+    message.proposal_id = object.proposal_id ?? 0;
     return message;
   },
 };
 
-function createBaseQueryProposalResponse(): QueryProposalResponse {
-  return { proposal: undefined };
-}
+const baseQueryProposalResponse: object = {};
 
 export const QueryProposalResponse = {
   encode(
@@ -1190,7 +1240,7 @@ export const QueryProposalResponse = {
   ): QueryProposalResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryProposalResponse();
+    const message = { ...baseQueryProposalResponse } as QueryProposalResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1206,11 +1256,12 @@ export const QueryProposalResponse = {
   },
 
   fromJSON(object: any): QueryProposalResponse {
-    return {
-      proposal: isSet(object.proposal)
+    const message = { ...baseQueryProposalResponse } as QueryProposalResponse;
+    message.proposal =
+      object.proposal !== undefined && object.proposal !== null
         ? Proposal.fromJSON(object.proposal)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryProposalResponse): unknown {
@@ -1225,7 +1276,7 @@ export const QueryProposalResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryProposalResponse>, I>>(
     object: I
   ): QueryProposalResponse {
-    const message = createBaseQueryProposalResponse();
+    const message = { ...baseQueryProposalResponse } as QueryProposalResponse;
     message.proposal =
       object.proposal !== undefined && object.proposal !== null
         ? Proposal.fromPartial(object.proposal)
@@ -1234,9 +1285,7 @@ export const QueryProposalResponse = {
   },
 };
 
-function createBaseQueryProposalsByGroupPolicyRequest(): QueryProposalsByGroupPolicyRequest {
-  return { address: "", pagination: undefined };
-}
+const baseQueryProposalsByGroupPolicyRequest: object = { address: "" };
 
 export const QueryProposalsByGroupPolicyRequest = {
   encode(
@@ -1258,7 +1307,9 @@ export const QueryProposalsByGroupPolicyRequest = {
   ): QueryProposalsByGroupPolicyRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryProposalsByGroupPolicyRequest();
+    const message = {
+      ...baseQueryProposalsByGroupPolicyRequest,
+    } as QueryProposalsByGroupPolicyRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1277,12 +1328,18 @@ export const QueryProposalsByGroupPolicyRequest = {
   },
 
   fromJSON(object: any): QueryProposalsByGroupPolicyRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryProposalsByGroupPolicyRequest,
+    } as QueryProposalsByGroupPolicyRequest;
+    message.address =
+      object.address !== undefined && object.address !== null
+        ? String(object.address)
+        : "";
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryProposalsByGroupPolicyRequest): unknown {
@@ -1298,7 +1355,9 @@ export const QueryProposalsByGroupPolicyRequest = {
   fromPartial<
     I extends Exact<DeepPartial<QueryProposalsByGroupPolicyRequest>, I>
   >(object: I): QueryProposalsByGroupPolicyRequest {
-    const message = createBaseQueryProposalsByGroupPolicyRequest();
+    const message = {
+      ...baseQueryProposalsByGroupPolicyRequest,
+    } as QueryProposalsByGroupPolicyRequest;
     message.address = object.address ?? "";
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -1308,9 +1367,7 @@ export const QueryProposalsByGroupPolicyRequest = {
   },
 };
 
-function createBaseQueryProposalsByGroupPolicyResponse(): QueryProposalsByGroupPolicyResponse {
-  return { proposals: [], pagination: undefined };
-}
+const baseQueryProposalsByGroupPolicyResponse: object = {};
 
 export const QueryProposalsByGroupPolicyResponse = {
   encode(
@@ -1335,7 +1392,10 @@ export const QueryProposalsByGroupPolicyResponse = {
   ): QueryProposalsByGroupPolicyResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryProposalsByGroupPolicyResponse();
+    const message = {
+      ...baseQueryProposalsByGroupPolicyResponse,
+    } as QueryProposalsByGroupPolicyResponse;
+    message.proposals = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1354,14 +1414,17 @@ export const QueryProposalsByGroupPolicyResponse = {
   },
 
   fromJSON(object: any): QueryProposalsByGroupPolicyResponse {
-    return {
-      proposals: Array.isArray(object?.proposals)
-        ? object.proposals.map((e: any) => Proposal.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryProposalsByGroupPolicyResponse,
+    } as QueryProposalsByGroupPolicyResponse;
+    message.proposals = (object.proposals ?? []).map((e: any) =>
+      Proposal.fromJSON(e)
+    );
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryProposalsByGroupPolicyResponse): unknown {
@@ -1383,7 +1446,9 @@ export const QueryProposalsByGroupPolicyResponse = {
   fromPartial<
     I extends Exact<DeepPartial<QueryProposalsByGroupPolicyResponse>, I>
   >(object: I): QueryProposalsByGroupPolicyResponse {
-    const message = createBaseQueryProposalsByGroupPolicyResponse();
+    const message = {
+      ...baseQueryProposalsByGroupPolicyResponse,
+    } as QueryProposalsByGroupPolicyResponse;
     message.proposals =
       object.proposals?.map((e) => Proposal.fromPartial(e)) || [];
     message.pagination =
@@ -1394,17 +1459,18 @@ export const QueryProposalsByGroupPolicyResponse = {
   },
 };
 
-function createBaseQueryVoteByProposalVoterRequest(): QueryVoteByProposalVoterRequest {
-  return { proposalId: Long.UZERO, voter: "" };
-}
+const baseQueryVoteByProposalVoterRequest: object = {
+  proposal_id: 0,
+  voter: "",
+};
 
 export const QueryVoteByProposalVoterRequest = {
   encode(
     message: QueryVoteByProposalVoterRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (!message.proposalId.isZero()) {
-      writer.uint32(8).uint64(message.proposalId);
+    if (message.proposal_id !== 0) {
+      writer.uint32(8).uint64(message.proposal_id);
     }
     if (message.voter !== "") {
       writer.uint32(18).string(message.voter);
@@ -1418,12 +1484,14 @@ export const QueryVoteByProposalVoterRequest = {
   ): QueryVoteByProposalVoterRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryVoteByProposalVoterRequest();
+    const message = {
+      ...baseQueryVoteByProposalVoterRequest,
+    } as QueryVoteByProposalVoterRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proposalId = reader.uint64() as Long;
+          message.proposal_id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
           message.voter = reader.string();
@@ -1437,18 +1505,24 @@ export const QueryVoteByProposalVoterRequest = {
   },
 
   fromJSON(object: any): QueryVoteByProposalVoterRequest {
-    return {
-      proposalId: isSet(object.proposalId)
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO,
-      voter: isSet(object.voter) ? String(object.voter) : "",
-    };
+    const message = {
+      ...baseQueryVoteByProposalVoterRequest,
+    } as QueryVoteByProposalVoterRequest;
+    message.proposal_id =
+      object.proposal_id !== undefined && object.proposal_id !== null
+        ? Number(object.proposal_id)
+        : 0;
+    message.voter =
+      object.voter !== undefined && object.voter !== null
+        ? String(object.voter)
+        : "";
+    return message;
   },
 
   toJSON(message: QueryVoteByProposalVoterRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined &&
-      (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.proposal_id !== undefined &&
+      (obj.proposal_id = Math.round(message.proposal_id));
     message.voter !== undefined && (obj.voter = message.voter);
     return obj;
   },
@@ -1456,19 +1530,16 @@ export const QueryVoteByProposalVoterRequest = {
   fromPartial<I extends Exact<DeepPartial<QueryVoteByProposalVoterRequest>, I>>(
     object: I
   ): QueryVoteByProposalVoterRequest {
-    const message = createBaseQueryVoteByProposalVoterRequest();
-    message.proposalId =
-      object.proposalId !== undefined && object.proposalId !== null
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO;
+    const message = {
+      ...baseQueryVoteByProposalVoterRequest,
+    } as QueryVoteByProposalVoterRequest;
+    message.proposal_id = object.proposal_id ?? 0;
     message.voter = object.voter ?? "";
     return message;
   },
 };
 
-function createBaseQueryVoteByProposalVoterResponse(): QueryVoteByProposalVoterResponse {
-  return { vote: undefined };
-}
+const baseQueryVoteByProposalVoterResponse: object = {};
 
 export const QueryVoteByProposalVoterResponse = {
   encode(
@@ -1487,7 +1558,9 @@ export const QueryVoteByProposalVoterResponse = {
   ): QueryVoteByProposalVoterResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryVoteByProposalVoterResponse();
+    const message = {
+      ...baseQueryVoteByProposalVoterResponse,
+    } as QueryVoteByProposalVoterResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1503,9 +1576,14 @@ export const QueryVoteByProposalVoterResponse = {
   },
 
   fromJSON(object: any): QueryVoteByProposalVoterResponse {
-    return {
-      vote: isSet(object.vote) ? Vote.fromJSON(object.vote) : undefined,
-    };
+    const message = {
+      ...baseQueryVoteByProposalVoterResponse,
+    } as QueryVoteByProposalVoterResponse;
+    message.vote =
+      object.vote !== undefined && object.vote !== null
+        ? Vote.fromJSON(object.vote)
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryVoteByProposalVoterResponse): unknown {
@@ -1518,7 +1596,9 @@ export const QueryVoteByProposalVoterResponse = {
   fromPartial<
     I extends Exact<DeepPartial<QueryVoteByProposalVoterResponse>, I>
   >(object: I): QueryVoteByProposalVoterResponse {
-    const message = createBaseQueryVoteByProposalVoterResponse();
+    const message = {
+      ...baseQueryVoteByProposalVoterResponse,
+    } as QueryVoteByProposalVoterResponse;
     message.vote =
       object.vote !== undefined && object.vote !== null
         ? Vote.fromPartial(object.vote)
@@ -1527,17 +1607,15 @@ export const QueryVoteByProposalVoterResponse = {
   },
 };
 
-function createBaseQueryVotesByProposalRequest(): QueryVotesByProposalRequest {
-  return { proposalId: Long.UZERO, pagination: undefined };
-}
+const baseQueryVotesByProposalRequest: object = { proposal_id: 0 };
 
 export const QueryVotesByProposalRequest = {
   encode(
     message: QueryVotesByProposalRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (!message.proposalId.isZero()) {
-      writer.uint32(8).uint64(message.proposalId);
+    if (message.proposal_id !== 0) {
+      writer.uint32(8).uint64(message.proposal_id);
     }
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
@@ -1551,12 +1629,14 @@ export const QueryVotesByProposalRequest = {
   ): QueryVotesByProposalRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryVotesByProposalRequest();
+    const message = {
+      ...baseQueryVotesByProposalRequest,
+    } as QueryVotesByProposalRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proposalId = reader.uint64() as Long;
+          message.proposal_id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -1570,20 +1650,24 @@ export const QueryVotesByProposalRequest = {
   },
 
   fromJSON(object: any): QueryVotesByProposalRequest {
-    return {
-      proposalId: isSet(object.proposalId)
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO,
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryVotesByProposalRequest,
+    } as QueryVotesByProposalRequest;
+    message.proposal_id =
+      object.proposal_id !== undefined && object.proposal_id !== null
+        ? Number(object.proposal_id)
+        : 0;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryVotesByProposalRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined &&
-      (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.proposal_id !== undefined &&
+      (obj.proposal_id = Math.round(message.proposal_id));
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
         ? PageRequest.toJSON(message.pagination)
@@ -1594,11 +1678,10 @@ export const QueryVotesByProposalRequest = {
   fromPartial<I extends Exact<DeepPartial<QueryVotesByProposalRequest>, I>>(
     object: I
   ): QueryVotesByProposalRequest {
-    const message = createBaseQueryVotesByProposalRequest();
-    message.proposalId =
-      object.proposalId !== undefined && object.proposalId !== null
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO;
+    const message = {
+      ...baseQueryVotesByProposalRequest,
+    } as QueryVotesByProposalRequest;
+    message.proposal_id = object.proposal_id ?? 0;
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromPartial(object.pagination)
@@ -1607,9 +1690,7 @@ export const QueryVotesByProposalRequest = {
   },
 };
 
-function createBaseQueryVotesByProposalResponse(): QueryVotesByProposalResponse {
-  return { votes: [], pagination: undefined };
-}
+const baseQueryVotesByProposalResponse: object = {};
 
 export const QueryVotesByProposalResponse = {
   encode(
@@ -1634,7 +1715,10 @@ export const QueryVotesByProposalResponse = {
   ): QueryVotesByProposalResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryVotesByProposalResponse();
+    const message = {
+      ...baseQueryVotesByProposalResponse,
+    } as QueryVotesByProposalResponse;
+    message.votes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1653,14 +1737,15 @@ export const QueryVotesByProposalResponse = {
   },
 
   fromJSON(object: any): QueryVotesByProposalResponse {
-    return {
-      votes: Array.isArray(object?.votes)
-        ? object.votes.map((e: any) => Vote.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryVotesByProposalResponse,
+    } as QueryVotesByProposalResponse;
+    message.votes = (object.votes ?? []).map((e: any) => Vote.fromJSON(e));
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryVotesByProposalResponse): unknown {
@@ -1680,7 +1765,9 @@ export const QueryVotesByProposalResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryVotesByProposalResponse>, I>>(
     object: I
   ): QueryVotesByProposalResponse {
-    const message = createBaseQueryVotesByProposalResponse();
+    const message = {
+      ...baseQueryVotesByProposalResponse,
+    } as QueryVotesByProposalResponse;
     message.votes = object.votes?.map((e) => Vote.fromPartial(e)) || [];
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -1690,9 +1777,7 @@ export const QueryVotesByProposalResponse = {
   },
 };
 
-function createBaseQueryVotesByVoterRequest(): QueryVotesByVoterRequest {
-  return { voter: "", pagination: undefined };
-}
+const baseQueryVotesByVoterRequest: object = { voter: "" };
 
 export const QueryVotesByVoterRequest = {
   encode(
@@ -1714,7 +1799,9 @@ export const QueryVotesByVoterRequest = {
   ): QueryVotesByVoterRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryVotesByVoterRequest();
+    const message = {
+      ...baseQueryVotesByVoterRequest,
+    } as QueryVotesByVoterRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1733,12 +1820,18 @@ export const QueryVotesByVoterRequest = {
   },
 
   fromJSON(object: any): QueryVotesByVoterRequest {
-    return {
-      voter: isSet(object.voter) ? String(object.voter) : "",
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryVotesByVoterRequest,
+    } as QueryVotesByVoterRequest;
+    message.voter =
+      object.voter !== undefined && object.voter !== null
+        ? String(object.voter)
+        : "";
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryVotesByVoterRequest): unknown {
@@ -1754,7 +1847,9 @@ export const QueryVotesByVoterRequest = {
   fromPartial<I extends Exact<DeepPartial<QueryVotesByVoterRequest>, I>>(
     object: I
   ): QueryVotesByVoterRequest {
-    const message = createBaseQueryVotesByVoterRequest();
+    const message = {
+      ...baseQueryVotesByVoterRequest,
+    } as QueryVotesByVoterRequest;
     message.voter = object.voter ?? "";
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -1764,9 +1859,7 @@ export const QueryVotesByVoterRequest = {
   },
 };
 
-function createBaseQueryVotesByVoterResponse(): QueryVotesByVoterResponse {
-  return { votes: [], pagination: undefined };
-}
+const baseQueryVotesByVoterResponse: object = {};
 
 export const QueryVotesByVoterResponse = {
   encode(
@@ -1791,7 +1884,10 @@ export const QueryVotesByVoterResponse = {
   ): QueryVotesByVoterResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryVotesByVoterResponse();
+    const message = {
+      ...baseQueryVotesByVoterResponse,
+    } as QueryVotesByVoterResponse;
+    message.votes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1810,14 +1906,15 @@ export const QueryVotesByVoterResponse = {
   },
 
   fromJSON(object: any): QueryVotesByVoterResponse {
-    return {
-      votes: Array.isArray(object?.votes)
-        ? object.votes.map((e: any) => Vote.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryVotesByVoterResponse,
+    } as QueryVotesByVoterResponse;
+    message.votes = (object.votes ?? []).map((e: any) => Vote.fromJSON(e));
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryVotesByVoterResponse): unknown {
@@ -1837,7 +1934,9 @@ export const QueryVotesByVoterResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryVotesByVoterResponse>, I>>(
     object: I
   ): QueryVotesByVoterResponse {
-    const message = createBaseQueryVotesByVoterResponse();
+    const message = {
+      ...baseQueryVotesByVoterResponse,
+    } as QueryVotesByVoterResponse;
     message.votes = object.votes?.map((e) => Vote.fromPartial(e)) || [];
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -1847,9 +1946,7 @@ export const QueryVotesByVoterResponse = {
   },
 };
 
-function createBaseQueryGroupsByMemberRequest(): QueryGroupsByMemberRequest {
-  return { address: "", pagination: undefined };
-}
+const baseQueryGroupsByMemberRequest: object = { address: "" };
 
 export const QueryGroupsByMemberRequest = {
   encode(
@@ -1871,7 +1968,9 @@ export const QueryGroupsByMemberRequest = {
   ): QueryGroupsByMemberRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupsByMemberRequest();
+    const message = {
+      ...baseQueryGroupsByMemberRequest,
+    } as QueryGroupsByMemberRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1890,12 +1989,18 @@ export const QueryGroupsByMemberRequest = {
   },
 
   fromJSON(object: any): QueryGroupsByMemberRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupsByMemberRequest,
+    } as QueryGroupsByMemberRequest;
+    message.address =
+      object.address !== undefined && object.address !== null
+        ? String(object.address)
+        : "";
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageRequest.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupsByMemberRequest): unknown {
@@ -1911,7 +2016,9 @@ export const QueryGroupsByMemberRequest = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupsByMemberRequest>, I>>(
     object: I
   ): QueryGroupsByMemberRequest {
-    const message = createBaseQueryGroupsByMemberRequest();
+    const message = {
+      ...baseQueryGroupsByMemberRequest,
+    } as QueryGroupsByMemberRequest;
     message.address = object.address ?? "";
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -1921,9 +2028,7 @@ export const QueryGroupsByMemberRequest = {
   },
 };
 
-function createBaseQueryGroupsByMemberResponse(): QueryGroupsByMemberResponse {
-  return { groups: [], pagination: undefined };
-}
+const baseQueryGroupsByMemberResponse: object = {};
 
 export const QueryGroupsByMemberResponse = {
   encode(
@@ -1948,7 +2053,10 @@ export const QueryGroupsByMemberResponse = {
   ): QueryGroupsByMemberResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryGroupsByMemberResponse();
+    const message = {
+      ...baseQueryGroupsByMemberResponse,
+    } as QueryGroupsByMemberResponse;
+    message.groups = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1967,14 +2075,17 @@ export const QueryGroupsByMemberResponse = {
   },
 
   fromJSON(object: any): QueryGroupsByMemberResponse {
-    return {
-      groups: Array.isArray(object?.groups)
-        ? object.groups.map((e: any) => GroupInfo.fromJSON(e))
-        : [],
-      pagination: isSet(object.pagination)
+    const message = {
+      ...baseQueryGroupsByMemberResponse,
+    } as QueryGroupsByMemberResponse;
+    message.groups = (object.groups ?? []).map((e: any) =>
+      GroupInfo.fromJSON(e)
+    );
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
         ? PageResponse.fromJSON(object.pagination)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryGroupsByMemberResponse): unknown {
@@ -1996,7 +2107,9 @@ export const QueryGroupsByMemberResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryGroupsByMemberResponse>, I>>(
     object: I
   ): QueryGroupsByMemberResponse {
-    const message = createBaseQueryGroupsByMemberResponse();
+    const message = {
+      ...baseQueryGroupsByMemberResponse,
+    } as QueryGroupsByMemberResponse;
     message.groups = object.groups?.map((e) => GroupInfo.fromPartial(e)) || [];
     message.pagination =
       object.pagination !== undefined && object.pagination !== null
@@ -2006,17 +2119,15 @@ export const QueryGroupsByMemberResponse = {
   },
 };
 
-function createBaseQueryTallyResultRequest(): QueryTallyResultRequest {
-  return { proposalId: Long.UZERO };
-}
+const baseQueryTallyResultRequest: object = { proposal_id: 0 };
 
 export const QueryTallyResultRequest = {
   encode(
     message: QueryTallyResultRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
-    if (!message.proposalId.isZero()) {
-      writer.uint32(8).uint64(message.proposalId);
+    if (message.proposal_id !== 0) {
+      writer.uint32(8).uint64(message.proposal_id);
     }
     return writer;
   },
@@ -2027,12 +2138,14 @@ export const QueryTallyResultRequest = {
   ): QueryTallyResultRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryTallyResultRequest();
+    const message = {
+      ...baseQueryTallyResultRequest,
+    } as QueryTallyResultRequest;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.proposalId = reader.uint64() as Long;
+          message.proposal_id = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -2043,35 +2156,35 @@ export const QueryTallyResultRequest = {
   },
 
   fromJSON(object: any): QueryTallyResultRequest {
-    return {
-      proposalId: isSet(object.proposalId)
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO,
-    };
+    const message = {
+      ...baseQueryTallyResultRequest,
+    } as QueryTallyResultRequest;
+    message.proposal_id =
+      object.proposal_id !== undefined && object.proposal_id !== null
+        ? Number(object.proposal_id)
+        : 0;
+    return message;
   },
 
   toJSON(message: QueryTallyResultRequest): unknown {
     const obj: any = {};
-    message.proposalId !== undefined &&
-      (obj.proposalId = (message.proposalId || Long.UZERO).toString());
+    message.proposal_id !== undefined &&
+      (obj.proposal_id = Math.round(message.proposal_id));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryTallyResultRequest>, I>>(
     object: I
   ): QueryTallyResultRequest {
-    const message = createBaseQueryTallyResultRequest();
-    message.proposalId =
-      object.proposalId !== undefined && object.proposalId !== null
-        ? Long.fromValue(object.proposalId)
-        : Long.UZERO;
+    const message = {
+      ...baseQueryTallyResultRequest,
+    } as QueryTallyResultRequest;
+    message.proposal_id = object.proposal_id ?? 0;
     return message;
   },
 };
 
-function createBaseQueryTallyResultResponse(): QueryTallyResultResponse {
-  return { tally: undefined };
-}
+const baseQueryTallyResultResponse: object = {};
 
 export const QueryTallyResultResponse = {
   encode(
@@ -2090,7 +2203,9 @@ export const QueryTallyResultResponse = {
   ): QueryTallyResultResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryTallyResultResponse();
+    const message = {
+      ...baseQueryTallyResultResponse,
+    } as QueryTallyResultResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2106,11 +2221,14 @@ export const QueryTallyResultResponse = {
   },
 
   fromJSON(object: any): QueryTallyResultResponse {
-    return {
-      tally: isSet(object.tally)
+    const message = {
+      ...baseQueryTallyResultResponse,
+    } as QueryTallyResultResponse;
+    message.tally =
+      object.tally !== undefined && object.tally !== null
         ? TallyResult.fromJSON(object.tally)
-        : undefined,
-    };
+        : undefined;
+    return message;
   },
 
   toJSON(message: QueryTallyResultResponse): unknown {
@@ -2125,7 +2243,9 @@ export const QueryTallyResultResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryTallyResultResponse>, I>>(
     object: I
   ): QueryTallyResultResponse {
-    const message = createBaseQueryTallyResultResponse();
+    const message = {
+      ...baseQueryTallyResultResponse,
+    } as QueryTallyResultResponse;
     message.tally =
       object.tally !== undefined && object.tally !== null
         ? TallyResult.fromPartial(object.tally)
@@ -2180,13 +2300,7 @@ export interface Query {
   GroupsByMember(
     request: QueryGroupsByMemberRequest
   ): Promise<QueryGroupsByMemberResponse>;
-  /**
-   * TallyResult returns the tally result of a proposal. If the proposal is
-   * still in voting period, then this query computes the current tally state,
-   * which might not be final. On the other hand, if the proposal is final,
-   * then it simply returns the `final_tally_result` state stored in the
-   * proposal itself.
-   */
+  /** TallyResult queries the tally of a proposal votes. */
   TallyResult(
     request: QueryTallyResultRequest
   ): Promise<QueryTallyResultResponse>;
@@ -2393,6 +2507,17 @@ interface Rpc {
   ): Promise<Uint8Array>;
 }
 
+declare var self: any | undefined;
+declare var window: any | undefined;
+declare var global: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
+
 type Builtin =
   | Date
   | Function
@@ -2404,8 +2529,6 @@ type Builtin =
 
 export type DeepPartial<T> = T extends Builtin
   ? T
-  : T extends Long
-  ? string | number | Long
   : T extends Array<infer U>
   ? Array<DeepPartial<U>>
   : T extends ReadonlyArray<infer U>
@@ -2422,11 +2545,14 @@ export type Exact<P, I extends P> = P extends Builtin
     never
   >;
 
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
-}
-
-function isSet(value: any): boolean {
-  return value !== null && value !== undefined;
 }
