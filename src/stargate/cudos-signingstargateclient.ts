@@ -26,7 +26,7 @@ export class CudosSigningStargateClient extends SigningStargateClient {
         this.groupModule = new GroupModule(this);
     }
 
-    public async msgMultiSendProposal(
+    public async msgMultisend(
         sender: {
             address: string,
             coins: Coin[]
