@@ -1,9 +1,11 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
+import { Coin, EncodeObject } from "@cosmjs/proto-signing";
 import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry } from "../../../utils";
 import { GasPrice, StdFee } from "../..";
-import { MsgCreateGroupWithPolicy } from "./proto-types/tx.pb";
+import { MsgCreateGroupWithPolicy, MsgSubmitProposal } from "./proto-types/tx.pb";
 import { ThresholdDecisionPolicy, Member } from "./proto-types/types.pb";
 import { msgCreateGroupWithPolicy, msgSubmitProposal, thresholdDecisionPolicy } from "./types";
+import { MsgMultiSend } from "cosmjs-types/cosmos/bank/v1beta1/tx"
+
 
 export class GroupModule {
     private readonly _client: ClientSimulateFn
@@ -64,6 +66,48 @@ export class GroupModule {
         };
 
         const fee = await estimateFee(this._client, admin, [msgEncoded], gasPrice, gasMultiplier, memo);
+
+        return {
+            msg: msgEncoded,
+            fee: fee
+        }
+    }
+
+    public async msgMultiSendProposal(
+        sender: {
+            address: string,
+            coins: Coin[]
+        }[],
+        recipients: {
+            address: string,
+            coins: Coin[]
+        }[],
+        multisigAddress: string,
+        proposer: string,
+        proposalMetadata: string,
+        gasPrice: GasPrice,
+        gasMultiplier = 1.3,
+        memo = ""
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
+        const multisendMsg = MsgMultiSend.fromPartial({
+            inputs: sender,
+            outputs: recipients,
+        });
+
+        const msgEncoded = {
+            typeUrl: msgSubmitProposal.typeUrl,
+            value: MsgSubmitProposal.fromPartial({
+                address: multisigAddress,
+                proposers: [proposer],
+                metadata: proposalMetadata,
+                messages: [{
+                    type_url: "/cosmos.bank.v1beta1.MsgMultiSend",
+                    value: MsgMultiSend.encode(multisendMsg).finish()
+                }],
+            })
+        }
+
+        const fee = await estimateFee(this._client, sender[0].address, [msgEncoded], gasPrice, gasMultiplier, memo);
 
         return {
             msg: msgEncoded,
