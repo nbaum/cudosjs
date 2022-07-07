@@ -2,7 +2,7 @@ import { OfflineSigner } from "@cosmjs/proto-signing";
 import { SigningStargateClientOptions, SigningStargateClient, GasPrice, DeliverTxResponse } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { GroupModule } from "./modules/group/module";
-import { NftModule } from "./modules/nft/module";
+import { NftInfo, NftModule } from "./modules/nft/module";
 import { MsgIssueDenomResponse } from "./modules/nft/proto-types/tx";
 import { checkValidNftDenomId, checkValidAddress } from "../utils/checks";
 
@@ -31,58 +31,58 @@ export class CudosSigningStargateClient extends SigningStargateClient {
 
     //easy to use with estimated fee
     public async nftIssueDenom(
-        sender: string, 
-        id: string, 
-        name: string, 
+        sender: string,
+        id: string,
+        name: string,
         schema: string,
         symbol: string,
         gasPrice: GasPrice,
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgIssueDenom(id, name, schema, sender, '', symbol, gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgIssueDenom(id, name, schema, sender, '', symbol, gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
     }
 
     //easy to use with estimated fee
     public async nftTransfer(
-        sender: string, 
-        denomId: string, 
-        tokenId: string, 
+        sender: string,
+        denomId: string,
+        tokenId: string,
         from: string,
         to: string,
         gasPrice: GasPrice,
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgTransferNft(denomId, tokenId, from, to, sender, '', gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgTransferNft(denomId, tokenId, from, to, sender, '', gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
     }
 
     //easy to use with estimated fee
     public async nftApprove(
-        sender: string, 
-        denomId: string, 
-        tokenId: string, 
+        sender: string,
+        denomId: string,
+        tokenId: string,
         approvedAddress: string,
         gasPrice: GasPrice,
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgApproveNft(tokenId, denomId, sender, approvedAddress, '', gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgApproveNft(tokenId, denomId, sender, approvedAddress, '', gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
     }
 
     //easy to use with estimated fee
     public async nftApproveAll(
-        sender: string, 
+        sender: string,
         operator: string,
         approved: boolean,
         gasPrice: GasPrice,
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgApproveAllNft(operator, sender, approved, '', gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgApproveAllNft(operator, sender, approved, '', gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
     }
 
@@ -98,7 +98,7 @@ export class CudosSigningStargateClient extends SigningStargateClient {
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgEditNFT(tokenId, denomId, name, uri, data, sender, '', gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgEditNFT(tokenId, denomId, name, uri, data, sender, '', gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
     }
 
@@ -114,8 +114,20 @@ export class CudosSigningStargateClient extends SigningStargateClient {
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgMintNFT(denomId, name, uri, data, sender, recipient, '', gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgMintNFT(denomId, name, uri, data, sender, recipient, '', gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
+    }
+
+    //easy to use with estimated fee
+    public async nftMintMultipleTokens(
+        nftInfos: NftInfo[],
+        sender: string,
+        gasPrice: GasPrice,
+        memo?: string,
+        gasMultiplier?: number,
+    ): Promise<DeliverTxResponse> {
+        const { msgs, fee } = await this.nftModule.msgMintMultipleNFT(nftInfos, sender, '', gasPrice, gasMultiplier, memo);
+        return this.signAndBroadcast(sender, msgs, fee, memo);
     }
 
     //easy to use with estimated fee
@@ -127,10 +139,10 @@ export class CudosSigningStargateClient extends SigningStargateClient {
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgBurnNFT(tokenId, denomId, sender, '', gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgBurnNFT(tokenId, denomId, sender, '', gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
     }
-    
+
     //easy to use with estimated fee
     public async nftRevokeToken(
         sender: string,
@@ -141,7 +153,7 @@ export class CudosSigningStargateClient extends SigningStargateClient {
         memo?: string,
         gasMultiplier?: number,
     ): Promise<DeliverTxResponse> {
-        const {msg, fee} = await this.nftModule.msgRevokeNft(addressToRevoke, denomId, tokenId, sender, '', gasPrice, gasMultiplier, memo);
+        const { msg, fee } = await this.nftModule.msgRevokeNft(addressToRevoke, denomId, tokenId, sender, '', gasPrice, gasMultiplier, memo);
         return this.signAndBroadcast(sender, [msg], fee, memo);
     }
 }

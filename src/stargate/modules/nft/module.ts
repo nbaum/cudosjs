@@ -4,7 +4,30 @@ import { GasPrice, StdFee } from "../../..";
 import { msgIssueDenom, msgTransferNft, msgApproveNft, msgApproveAllNft, msgRevokeNft, msgEditNFT, msgMintNFT, msgBurnNFT } from "./types";
 import { checkValidNftDenomId, checkValidAddress } from "../../../utils/checks";
 
+export class NftInfo {
+    denomId: string;
+    name: string;
+    uri: string;
+    data: string;
+    recipient: string;
+
+    constructor(
+        denomId: string,
+        name: string,
+        uri: string,
+        data: string,
+        recipient: string
+    ) {
+        this.denomId = denomId;
+        this.name = name;
+        this.uri = uri;
+        this.data = data;
+        this.recipient = recipient;
+    }
+}
+
 export class NftModule {
+
     private readonly _client: ClientSimulateFn
 
     constructor(client: ClientSimulateFn & ClientRegistry) {
@@ -16,7 +39,7 @@ export class NftModule {
             msgApproveAllNft,
             msgRevokeNft,
             msgEditNFT,
-            msgMintNFT, 
+            msgMintNFT,
             msgBurnNFT
         ]);
     }
@@ -35,15 +58,15 @@ export class NftModule {
         checkValidNftDenomId(id);
         checkValidAddress(sender);
 
-        if (name.length === 0){
+        if (name.length === 0) {
             throw Error("Invalid name");
         }
 
-        if (schema.length === 0){
+        if (schema.length === 0) {
             throw Error("Invalid schema");
         }
 
-        if (symbol.length === 0){
+        if (symbol.length === 0) {
             throw Error("Invalid symbol");
         }
 
@@ -67,7 +90,7 @@ export class NftModule {
         }
     }
 
-    public async msgTransferNft (
+    public async msgTransferNft(
         denomId: string,
         tokenId: string,
         from: string,
@@ -77,13 +100,13 @@ export class NftModule {
         gasPrice: GasPrice,
         gasMultiplier: number = 1.3,
         memo: string = "",
-    ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidNftDenomId(denomId);
         checkValidAddress(sender);
         checkValidAddress(from);
         checkValidAddress(to);
 
-        if (tokenId.length === 0){
+        if (tokenId.length === 0) {
             throw Error("Invalid name");
         }
 
@@ -100,14 +123,14 @@ export class NftModule {
         };
 
         const fee = await estimateFee(this._client, sender, [msg], gasPrice, gasMultiplier, memo);
-    
+
         return {
             msg,
             fee
         }
     }
 
-    public async msgApproveNft (
+    public async msgApproveNft(
         id: string,
         denomId: string,
         sender: string,
@@ -116,12 +139,12 @@ export class NftModule {
         gasPrice: GasPrice,
         gasMultiplier: number = 1.3,
         memo: string = "",
-    ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidNftDenomId(denomId);
         checkValidAddress(sender);
         checkValidAddress(approvedAddress);
 
-        if (id.length === 0){
+        if (id.length === 0) {
             throw Error("Invalid name");
         }
 
@@ -137,14 +160,14 @@ export class NftModule {
         };
 
         const fee = await estimateFee(this._client, sender, [msg], gasPrice, gasMultiplier, memo);
-    
+
         return {
             msg,
             fee
         }
     }
 
-    public async msgApproveAllNft (
+    public async msgApproveAllNft(
         operator: string,
         sender: string,
         approved: boolean,
@@ -152,7 +175,7 @@ export class NftModule {
         gasPrice: GasPrice,
         gasMultiplier: number = 1.3,
         memo: string = "",
-    ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
         checkValidAddress(operator);
 
@@ -167,14 +190,14 @@ export class NftModule {
         };
 
         const fee = await estimateFee(this._client, sender, [msg], gasPrice, gasMultiplier, memo);
-    
+
         return {
             msg,
             fee
         }
     }
 
-    public async msgRevokeNft (
+    public async msgRevokeNft(
         addressToRevoke: string,
         denomId: string,
         tokenId: string,
@@ -183,12 +206,12 @@ export class NftModule {
         gasPrice: GasPrice,
         gasMultiplier: number = 1.3,
         memo: string = "",
-    ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(addressToRevoke);
         checkValidAddress(sender);
         checkValidNftDenomId(denomId);
 
-        if (tokenId.length === 0){
+        if (tokenId.length === 0) {
             throw Error("Invalid name");
         }
 
@@ -204,14 +227,14 @@ export class NftModule {
         };
 
         const fee = await estimateFee(this._client, sender, [msg], gasPrice, gasMultiplier, memo);
-    
+
         return {
             msg,
             fee
         }
     }
 
-    public async msgEditNFT (
+    public async msgEditNFT(
         id: string,
         denomId: string,
         name: string,
@@ -222,7 +245,7 @@ export class NftModule {
         gasPrice: GasPrice,
         gasMultiplier: number = 1.3,
         memo: string = "",
-    ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
         checkValidNftDenomId(denomId);
 
@@ -256,14 +279,14 @@ export class NftModule {
         };
 
         const fee = await estimateFee(this._client, sender, [msg], gasPrice, gasMultiplier, memo);
-    
+
         return {
             msg,
             fee
         }
     }
 
-    public async msgMintNFT (
+    public async msgMintNFT(
         denomId: string,
         name: string,
         uri: string,
@@ -274,7 +297,7 @@ export class NftModule {
         gasPrice: GasPrice,
         gasMultiplier: number = 1.3,
         memo: string = "",
-    ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
         checkValidAddress(recipient);
         checkValidNftDenomId(denomId);
@@ -305,14 +328,68 @@ export class NftModule {
         };
 
         const fee = await estimateFee(this._client, sender, [msg], gasPrice, gasMultiplier, memo);
-    
+
         return {
             msg,
             fee
         }
     }
 
-    public async msgBurnNFT (
+    public async msgMintMultipleNFT(
+        nftInfos: NftInfo[],
+        sender: string,
+        contractAddressSigner: string,
+        gasPrice: GasPrice,
+        gasMultiplier: number = 1.3,
+        memo: string = "",
+    ): Promise<{ msgs: EncodeObject[], fee: StdFee }> {
+        checkValidAddress(sender);
+
+        const msgs: EncodeObject[] = [];
+
+        nftInfos.forEach((nftInfo: NftInfo) => {
+            checkValidAddress(nftInfo.recipient);
+            checkValidNftDenomId(nftInfo.denomId);
+
+            if (nftInfo.name.length === 0) {
+                throw Error("Invalid name");
+            }
+
+            if (nftInfo.uri.length === 0) {
+                throw Error("Invalid uri");
+            }
+
+            if (nftInfo.data.length === 0) {
+                throw Error("Invalid data");
+            }
+
+            const msg = {
+                typeUrl: msgMintNFT.typeUrl,
+                value: msgMintNFT.type.fromPartial({
+                    denomId: nftInfo.denomId,
+                    name: nftInfo.name,
+                    uri: nftInfo.uri,
+                    data: nftInfo.data,
+                    sender,
+                    recipient: nftInfo.recipient,
+                    contractAddressSigner,
+                })
+            };
+
+            msgs.push(msg);
+        })
+
+
+
+        const fee = await estimateFee(this._client, sender, msgs, gasPrice, gasMultiplier, memo);
+
+        return {
+            msgs,
+            fee
+        }
+    }
+
+    public async msgBurnNFT(
         id: string,
         denomId: string,
         sender: string,
@@ -320,7 +397,7 @@ export class NftModule {
         gasPrice: GasPrice,
         gasMultiplier: number = 1.3,
         memo: string = "",
-    ): Promise<{ msg: EncodeObject, fee: StdFee}> {
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
         checkValidNftDenomId(denomId);
 
@@ -339,7 +416,7 @@ export class NftModule {
         };
 
         const fee = await estimateFee(this._client, sender, [msg], gasPrice, gasMultiplier, memo);
-    
+
         return {
             msg,
             fee
