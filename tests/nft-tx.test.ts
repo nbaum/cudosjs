@@ -69,21 +69,6 @@ describe('alpha contract', () => {
       .rejects.toThrow(`Invalid denom id - only accepts lowercase alphanumeric characters, and begin with an english letter`);
   })
 
-  test('issue denom - fails empty name', async () => {
-    return expect(faucet.nftIssueDenom(faucetAddress, correctDenom.id, '', correctDenom.schema, correctDenom.symbol, gasPrice))
-      .rejects.toThrow(`Invalid name`);
-  })
-
-  test('issue denom - fails empty schema', async () => {
-    return expect(faucet.nftIssueDenom(faucetAddress, correctDenom.id, correctDenom.name, '', correctDenom.symbol, gasPrice))
-      .rejects.toThrow(`Invalid schema`);
-  })
-
-  test('issue denom - fails empty symbol', async () => {
-    return expect(faucet.nftIssueDenom(faucetAddress, correctDenom.id, correctDenom.name, correctDenom.schema, '', gasPrice))
-      .rejects.toThrow(`Invalid symbol`);
-  })
-
   test('mint token - happy path', async () => {
     await faucet.nftMintToken(faucetAddress, correctDenom.id, correctToken.name, correctToken.uri, correctToken.data, faucetAddress, gasPrice);
     newTokenId++;
@@ -98,21 +83,6 @@ describe('alpha contract', () => {
   test('mint token - fails missing denom id', async () => {
     return expect(faucet.nftMintToken(faucetAddress, 'missingdenomid', correctToken.name, correctToken.uri, correctToken.data, faucetAddress, gasPrice))
       .rejects.toThrow(`Query failed with (18): failed to execute message; message index: 0: not found denomID: missingdenomid: invalid denom: invalid request`);
-  })
-
-  test('mint token - fails empty name', async () => {
-    return expect(faucet.nftMintToken(faucetAddress, correctDenom.id, '', correctToken.uri, correctToken.data, faucetAddress, gasPrice))
-      .rejects.toThrow(`Invalid name`);
-  })
-
-  test('mint token - fails empty uri', async () => {
-    return expect(faucet.nftMintToken(faucetAddress, correctDenom.id, correctToken.name, '', correctToken.data, faucetAddress, gasPrice))
-      .rejects.toThrow(`Invalid uri`);
-  })
-
-  test('mint token - fails empty data', async () => {
-    return expect(faucet.nftMintToken(faucetAddress, correctDenom.id, correctToken.name, correctToken.uri, correctToken.data, 'invalidaddress', gasPrice))
-      .rejects.toThrow(`Invalid address`);
   })
 
   test('mint token - fails invalid sender address', async () => {

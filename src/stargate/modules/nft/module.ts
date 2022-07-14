@@ -58,18 +58,6 @@ export class NftModule {
         checkValidNftDenomId(id);
         checkValidAddress(sender);
 
-        if (name.length === 0) {
-            throw Error("Invalid name");
-        }
-
-        if (schema.length === 0) {
-            throw Error("Invalid schema");
-        }
-
-        if (symbol.length === 0) {
-            throw Error("Invalid symbol");
-        }
-
         const msg = {
             typeUrl: msgIssueDenom.typeUrl,
             value: msgIssueDenom.type.fromPartial({
@@ -144,10 +132,6 @@ export class NftModule {
         checkValidAddress(sender);
         checkValidAddress(approvedAddress);
 
-        if (id.length === 0) {
-            throw Error("Invalid name");
-        }
-
         const msg = {
             typeUrl: msgApproveNft.typeUrl,
             value: msgApproveNft.type.fromPartial({
@@ -211,10 +195,6 @@ export class NftModule {
         checkValidAddress(sender);
         checkValidNftDenomId(denomId);
 
-        if (tokenId.length === 0) {
-            throw Error("Invalid name");
-        }
-
         const msg = {
             typeUrl: msgRevokeNft.typeUrl,
             value: msgRevokeNft.type.fromPartial({
@@ -248,22 +228,6 @@ export class NftModule {
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
         checkValidNftDenomId(denomId);
-
-        if (id.length === 0) {
-            throw Error("Invalid tokenId");
-        }
-
-        if (name.length === 0) {
-            throw Error("Invalid name");
-        }
-
-        if (uri.length === 0) {
-            throw Error("Invalid uri");
-        }
-
-        if (data.length === 0) {
-            throw Error("Invalid data");
-        }
 
         const msg = {
             typeUrl: msgEditNFT.typeUrl,
@@ -302,18 +266,6 @@ export class NftModule {
         checkValidAddress(recipient);
         checkValidNftDenomId(denomId);
 
-        if (name.length === 0) {
-            throw Error("Invalid name");
-        }
-
-        if (uri.length === 0) {
-            throw Error("Invalid uri");
-        }
-
-        if (data.length === 0) {
-            throw Error("Invalid data");
-        }
-
         const msg = {
             typeUrl: msgMintNFT.typeUrl,
             value: msgMintNFT.type.fromPartial({
@@ -350,18 +302,6 @@ export class NftModule {
         nftInfos.forEach((nftInfo: NftInfo) => {
             checkValidAddress(nftInfo.recipient);
             checkValidNftDenomId(nftInfo.denomId);
-
-            if (nftInfo.name.length === 0) {
-                throw Error("Invalid name");
-            }
-
-            if (nftInfo.uri.length === 0) {
-                throw Error("Invalid uri");
-            }
-
-            if (nftInfo.data.length === 0) {
-                throw Error("Invalid data");
-            }
 
             const msg = {
                 typeUrl: msgMintNFT.typeUrl,
@@ -400,10 +340,6 @@ export class NftModule {
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
         checkValidNftDenomId(denomId);
-
-        if (id.length === 0) {
-            throw Error("Invalid tokenId");
-        }
 
         const msg = {
             typeUrl: msgBurnNFT.typeUrl,
