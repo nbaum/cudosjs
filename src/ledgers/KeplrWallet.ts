@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import Ledger from './Ledger';
 import { CudosNetworkConsts } from '../utils';
 
-declare let fetch: (url: string) => Promise < any >;
+declare let fetch: (url: string) => Promise<any>;
 
 declare let window: {
     keplr: any;
@@ -24,13 +24,15 @@ export interface KeplrWalletConfig {
 export class KeplrWallet extends Ledger {
 
     keplrWalletConfig: KeplrWalletConfig;
-    
+    addressChangeCallbacks: ((address: string) => void)[];
+
     constructor(keplrWalletConfig: KeplrWalletConfig) {
         super();
         this.keplrWalletConfig = keplrWalletConfig;
+        this.addressChangeCallbacks = [];
     }
 
-    async connect(): Promise < void > {
+    async connect(): Promise<void> {
         if (!window.keplr) {
             throw new Error('Failed to get balance!');
         }
@@ -148,15 +150,15 @@ export class KeplrWallet extends Ledger {
 
     }
 
-    async disconnect(): Promise < void > {
-        return new Promise < void >((resolve, reject) => {
+    async disconnect(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
             this.init();
             window.removeEventListener('keplr_keystorechange', this.accountChangeEventListener);
             resolve();
         });
     }
 
-    async getBalance(): Promise < BigNumber > {
+    async getBalance(): Promise<BigNumber> {
         try {
             const offlineSigner = window.getOfflineSigner(this.keplrWalletConfig.CHAIN_ID);
             const account = (await offlineSigner.getAccounts())[0];
@@ -175,9 +177,19 @@ export class KeplrWallet extends Ledger {
         return this.connected === true;
     }
 
-    async accountChangeEventListener(): Promise < void > {
-        if (this.offlineSigner !== null) {
+    addAddressChangeCallback(callback: (address: string) => void) {
+        this.addressChangeCallbacks.push(callback);
+    }
+
+    removeAddressChangeCallback(callback: (address: string) => void) {
+        this.addressChangeCallbacks = this.addressChangeCallbacks.filter((func: (address: string) => void) => func === callback);
+    }
+
+    private accountChangeEventListener = async (): Promise<void> => {
+        if (this.offlineSigner !== null && this.offlineSigner !== undefined) {
             this.accountAddress = (await this.offlineSigner.getAccounts())[0].address;
         }
+
+        this.addressChangeCallbacks.forEach((callback: (address: string) => void) => callback(this.accountAddress ?? ''));
     }
 }

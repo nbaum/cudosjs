@@ -7,10 +7,10 @@ export default abstract class Ledger {
     accountAddress: string | null = null;
     offlineSigner: OfflineSigner | null = null;
 
-    abstract connect(): Promise < void >;
-    abstract disconnect(): Promise < void >;
-    abstract getBalance(): Promise < BigNumber >;
-
+    abstract connect(): Promise<void>;
+    abstract disconnect(): Promise<void>;
+    abstract getBalance(): Promise<BigNumber>;
+    abstract addAddressChangeCallback(callback: (adress: string) => void): void;
     abstract isConnected(): boolean;
 
     constructor() {
