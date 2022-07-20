@@ -1,9 +1,9 @@
 import { Coin, EncodeObject } from "@cosmjs/proto-signing";
 import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry } from "../../../utils";
 import { GasPrice, StdFee } from "../..";
-import { MsgCreateGroupWithPolicy, MsgSubmitProposal } from "./proto-types/tx.pb";
-import { ThresholdDecisionPolicy, Member } from "./proto-types/types.pb";
-import { msgCreateGroupWithPolicy, msgSubmitProposal, thresholdDecisionPolicy } from "./types";
+import { Exec, MsgCreateGroupWithPolicy, MsgSubmitProposal, MsgUpdateGroupMetadata, MsgVote, MsgExec, MsgWithdrawProposal } from "./proto-types/tx.pb";
+import { ThresholdDecisionPolicy, Member, VoteOption } from "./proto-types/types.pb";
+import { msgCreateGroupWithPolicy, msgSubmitProposal, thresholdDecisionPolicy, msgVote } from "./types";
 import { MsgMultiSend } from "cosmjs-types/cosmos/bank/v1beta1/tx"
 
 
@@ -108,6 +108,109 @@ export class GroupModule {
         }
 
         const fee = await estimateFee(this._client, sender[0].address, [msgEncoded], gasPrice, gasMultiplier, memo);
+
+        return {
+            msg: msgEncoded,
+            fee: fee
+        }
+    }
+
+    public async msgSubmitProposal(
+        multisigAddress: string,
+        proposer: string,
+        proposalMetadata: string,
+        messages: { type_url: string; value: Uint8Array; }[],
+        gasPrice: GasPrice,
+        gasMultiplier = 1.3,
+        memo = ""
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
+        const msgEncoded = {
+            typeUrl: msgSubmitProposal.typeUrl,
+            value: MsgSubmitProposal.fromPartial({
+                address: multisigAddress,
+                proposers: [proposer],
+                metadata: proposalMetadata,
+                messages: messages,
+            })
+        }
+
+        const fee = await estimateFee(this._client, proposer, [msgEncoded], gasPrice, gasMultiplier, memo);
+
+        return {
+            msg: msgEncoded,
+            fee: fee
+        }
+    }
+
+    public async msgVote(
+        proposalId: number,
+        voter: string,
+        voteOption: VoteOption,
+        metadata: string,
+        tryExec: Exec,
+        gasPrice: GasPrice,
+        gasMultiplier = 1.3,
+        memo = ""
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
+        const msgEncoded = {
+            typeUrl: msgVote.typeUrl,
+            value: MsgVote.fromPartial({
+                proposal_id: proposalId,
+                voter: voter,
+                option: voteOption,
+                metadata: metadata,
+                exec: tryExec
+            })
+        }
+
+        const fee = await estimateFee(this._client, voter, [msgEncoded], gasPrice, gasMultiplier, memo);
+
+        return {
+            msg: msgEncoded,
+            fee: fee
+        }
+    }
+
+    public async msgExec(
+        proposalId: number,
+        signer: string,
+        gasPrice: GasPrice,
+        gasMultiplier = 1.3,
+        memo = ""
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
+        const msgEncoded = {
+            typeUrl: msgVote.typeUrl,
+            value: MsgExec.fromPartial({
+                proposal_id: proposalId,
+                signer: signer
+            })
+        }
+
+        const fee = await estimateFee(this._client, signer, [msgEncoded], gasPrice, gasMultiplier, memo);
+
+        return {
+            msg: msgEncoded,
+            fee: fee
+        }
+    }
+
+    public async msgWithdrawProposal(
+        proposalId: number,
+        multisigAddress: string,
+        signer: string,
+        gasPrice: GasPrice,
+        gasMultiplier = 1.3,
+        memo = ""
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
+        const msgEncoded = {
+            typeUrl: msgVote.typeUrl,
+            value: MsgWithdrawProposal.fromPartial({
+                proposal_id: proposalId,
+                address: multisigAddress
+            })
+        }
+
+        const fee = await estimateFee(this._client, signer, [msgEncoded], gasPrice, gasMultiplier, memo);
 
         return {
             msg: msgEncoded,
