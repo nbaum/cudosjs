@@ -107,7 +107,7 @@ export class GroupModule {
             })
         }
 
-        const fee = await estimateFee(this._client, sender[0].address, [msgEncoded], gasPrice, gasMultiplier, memo);
+        const fee = await estimateFee(this._client, proposer, [msgEncoded], gasPrice, gasMultiplier, memo);
 
         return {
             msg: msgEncoded,
