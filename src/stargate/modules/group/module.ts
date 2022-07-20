@@ -1,5 +1,5 @@
 import { Coin, EncodeObject } from "@cosmjs/proto-signing";
-import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry } from "../../../utils";
+import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry, DEFAULT_GAS_MULTIPLIER } from "../../../utils";
 import { GasPrice, StdFee } from "../..";
 import { Exec, MsgCreateGroupWithPolicy, MsgSubmitProposal, MsgUpdateGroupMetadata, MsgVote, MsgExec, MsgWithdrawProposal } from "./proto-types/tx.pb";
 import { ThresholdDecisionPolicy, Member, VoteOption } from "./proto-types/types.pb";
@@ -33,7 +33,7 @@ export class GroupModule {
             minExecutionPeriod: number
         },
         gasPrice: GasPrice,
-        gasMultiplier = 1.3,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const threshold = ThresholdDecisionPolicy.fromPartial({
@@ -86,7 +86,7 @@ export class GroupModule {
         proposer: string,
         proposalMetadata: string,
         gasPrice: GasPrice,
-        gasMultiplier = 1.3,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const multisendMsg = MsgMultiSend.fromPartial({
@@ -121,7 +121,7 @@ export class GroupModule {
         proposalMetadata: string,
         messages: { type_url: string; value: Uint8Array; }[],
         gasPrice: GasPrice,
-        gasMultiplier = 1.3,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const msgEncoded = {
@@ -149,7 +149,7 @@ export class GroupModule {
         metadata: string,
         tryExec: Exec,
         gasPrice: GasPrice,
-        gasMultiplier = 1.3,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const msgEncoded = {
@@ -175,7 +175,7 @@ export class GroupModule {
         proposalId: number,
         signer: string,
         gasPrice: GasPrice,
-        gasMultiplier = 1.3,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const msgEncoded = {
@@ -199,7 +199,7 @@ export class GroupModule {
         multisigAddress: string,
         signer: string,
         gasPrice: GasPrice,
-        gasMultiplier = 1.3,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const msgEncoded = {

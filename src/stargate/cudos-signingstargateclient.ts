@@ -1,7 +1,7 @@
 import { Coin, EncodeObject, OfflineSigner } from "@cosmjs/proto-signing";
 import { SigningStargateClientOptions, SigningStargateClient, GasPrice, DeliverTxResponse, StdFee } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { estimateFee } from "../utils";
+import { DEFAULT_GAS_MULTIPLIER, estimateFee } from "../utils";
 import { GroupModule } from "./modules/group/module";
 import { NftInfo, NftModule } from "./modules/nft/module";
 import { checkValidNftDenomId, checkValidAddress } from "../utils/checks";
@@ -168,7 +168,7 @@ export class CudosSigningStargateClient extends SigningStargateClient {
             coins: Coin[]
         }[],
         gasPrice: GasPrice,
-        gasMultiplier = 1.3,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const multisendMsg = {

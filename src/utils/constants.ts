@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 export class CudosNetworkConsts {
-    
+
     static CURRENCY_DISPLAY_NAME = 'CUDOS';
     static CURRENCY_DENOM = 'acudos';
     static CURRENCY_DECIMALS = 18;
@@ -16,6 +16,7 @@ export class CudosNetworkConsts {
     static BECH32_PREFIX_CONS_ADDR = 'cudosvalcons';
     static BECH32_PREFIX_CONS_PUB = 'cudosvalconspub';
     static BECH32_ACC_ADDR_LENGTH = 44;
+    static DEFAULT_GAS_MULTIPLIER = 1.3;
 
 }
 
@@ -33,3 +34,4 @@ export const BECH32_PREFIX_VAL_PUB = CudosNetworkConsts.BECH32_PREFIX_VAL_PUB;
 export const BECH32_PREFIX_CONS_ADDR = CudosNetworkConsts.BECH32_PREFIX_CONS_ADDR;
 export const BECH32_PREFIX_CONS_PUB = CudosNetworkConsts.BECH32_PREFIX_CONS_PUB;
 export const BECH32_ACC_ADDR_LENGTH = CudosNetworkConsts.BECH32_ACC_ADDR_LENGTH;
+export const DEFAULT_GAS_MULTIPLIER = CudosNetworkConsts.DEFAULT_GAS_MULTIPLIER;

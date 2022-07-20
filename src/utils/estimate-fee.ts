@@ -3,13 +3,14 @@ import { EncodeObject } from "@cosmjs/proto-signing";
 import { ClientSimulateFn } from "./module-utils";
 import { coins } from "@cosmjs/amino";
 import { Uint53 } from "@cosmjs/math"
+import { DEFAULT_GAS_MULTIPLIER } from "./constants";
 
 export async function estimateFee(
     client: ClientSimulateFn,
     signer: string,
     messages: EncodeObject[],
     gasPrice: GasPrice,
-    gasMultiplier = 1.3,
+    gasMultiplier = DEFAULT_GAS_MULTIPLIER,
     memo = ""
 ): Promise<StdFee> {
     const gasEstimation = await client.simulate(signer, messages, memo);
@@ -21,3 +22,5 @@ export async function estimateFee(
         gas: gasLimit.toString(),
     };
 }
+
+

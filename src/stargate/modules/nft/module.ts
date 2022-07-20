@@ -1,5 +1,5 @@
 import { EncodeObject } from "@cosmjs/proto-signing";
-import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry } from "../../../utils";
+import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry, DEFAULT_GAS_MULTIPLIER } from "../../../utils";
 import { GasPrice, StdFee } from "../../..";
 import { msgIssueDenom, msgTransferNft, msgApproveNft, msgApproveAllNft, msgRevokeNft, msgEditNFT, msgMintNFT, msgBurnNFT } from "./types";
 import { checkValidNftDenomId, checkValidAddress } from "../../../utils/checks";
@@ -52,7 +52,7 @@ export class NftModule {
         contractAddressSigner: string,
         symbol: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidNftDenomId(id);
@@ -86,7 +86,7 @@ export class NftModule {
         sender: string,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidNftDenomId(denomId);
@@ -125,7 +125,7 @@ export class NftModule {
         approvedAddress: string,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidNftDenomId(denomId);
@@ -157,7 +157,7 @@ export class NftModule {
         approved: boolean,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
@@ -188,7 +188,7 @@ export class NftModule {
         sender: string,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(addressToRevoke);
@@ -223,7 +223,7 @@ export class NftModule {
         sender: string,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
@@ -259,7 +259,7 @@ export class NftModule {
         recipient: string,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
@@ -292,7 +292,7 @@ export class NftModule {
         sender: string,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msgs: EncodeObject[], fee: StdFee }> {
         checkValidAddress(sender);
@@ -335,7 +335,7 @@ export class NftModule {
         sender: string,
         contractAddressSigner: string,
         gasPrice: GasPrice,
-        gasMultiplier: number = 1.3,
+        gasMultiplier: number = DEFAULT_GAS_MULTIPLIER,
         memo: string = "",
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         checkValidAddress(sender);
