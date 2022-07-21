@@ -3,7 +3,7 @@ import { estimateFee, ClientSimulateFn, registerMsgs, ClientRegistry, DEFAULT_GA
 import { GasPrice, StdFee } from "../..";
 import { Exec, MsgCreateGroupWithPolicy, MsgSubmitProposal, MsgUpdateGroupMetadata, MsgVote, MsgExec, MsgWithdrawProposal } from "./proto-types/tx.pb";
 import { ThresholdDecisionPolicy, Member, VoteOption } from "./proto-types/types.pb";
-import { msgCreateGroupWithPolicy, msgSubmitProposal, thresholdDecisionPolicy, msgVote } from "./types";
+import { msgCreateGroupWithPolicy, msgSubmitProposal, thresholdDecisionPolicy, msgVote, msgExec } from "./types";
 import { MsgMultiSend } from "cosmjs-types/cosmos/bank/v1beta1/tx"
 
 
@@ -14,7 +14,9 @@ export class GroupModule {
         this._client = client;
         registerMsgs(client.registry, [
             msgCreateGroupWithPolicy,
-            msgSubmitProposal
+            msgSubmitProposal,
+            msgVote,
+            msgExec
         ]);
     }
 
