@@ -5,8 +5,9 @@ import { NftInfo } from '../src/stargate/modules/nft/module'
 import Long from "long";
 
 async function  testGravity(){
-    const mnemonic1 = 'ordinary witness such toddler tag mouse helmet perfect venue eyebrow upgrade rabbit'
-    const mnemonic2 = 'course hurdle stand heart rescue trap upset cousin dish embody business equip'
+  // Mnemonics from Debug-Node
+    const mnemonic1 = 'message dose march tank prefer jacket crystal evoke tell tissue pipe toast actual horn mansion leaf penalty lobster field acoustic half talk bike sell'
+    const mnemonic2 = 'muffin solution relief forward believe affair myself behave public negative crack chapter task rocket pride emerge sister east account decline surge input round bachelor'
 
 
     const gasPrice = GasPrice.fromString('1acudos');
@@ -34,6 +35,7 @@ async function  testGravity(){
     alice =(await (await DirectSecp256k1HdWallet.fromMnemonic(mnemonic2)).getAccounts())[0];
 
     // Keplr
+    const coinAmount = {denom:"acudos", amount: "100"}
 
 
     async function cancelTrx(){
