@@ -39,5 +39,5 @@ build/
 # package-lock.json
 package-lock.json
 
-testing.ts
+
 explanation.md
