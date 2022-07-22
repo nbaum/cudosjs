@@ -1,17 +1,17 @@
 import { QueryClient, StargateClient, StargateClientOptions } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
-import { GroupExtension, setupGroupExtension } from "./modules/group/queries";
-import { QueryGroupInfoResponse } from "./modules/group/proto-types/query.pb";
-import { NftExtension, setupNftExtension } from "./modules/nft/queries";
-import { QueryApprovalsIsApprovedForAllResponse, QueryApprovalsNFTResponse, QueryCollectionResponse, QueryDenomByNameRequest, QueryDenomByNameResponse, QueryDenomBySymbolResponse, QueryDenomRequest, QueryDenomResponse, QueryDenomsResponse, QueryNFTResponse, QueryOwnerResponse, QuerySupplyResponse } from "./modules/nft/proto-types/query";
-import { checkValidNftDenomId, checkValidAddress } from "../utils/checks";
-import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
+import { GroupQueryClient } from "./modules/group/clients/queryClient";
+import { NFTQueryClient } from "./modules/nft/clients/queryClient";
+import { GravityQueryClient } from "./modules/gravity/clients/queryClient";
+
 
 import { SigningStargateClient } from ".";
 
 export class CudosStargateClient extends StargateClient {
-    private readonly groupQueryClient: QueryClient & GroupExtension;
-    private readonly nftQueryClient: QueryClient & NftExtension;
+    private readonly groupQueryClient: GroupQueryClient;
+    private readonly nftQueryClient: NFTQueryClient;
+    private readonly gravityQueryClient: GravityQueryClient
+
 
     public static override async connect(
         endpoint: string | HttpEndpoint,
@@ -23,95 +23,22 @@ export class CudosStargateClient extends StargateClient {
 
     protected constructor(tmClient: Tendermint34Client, options: StargateClientOptions) {
         super(tmClient, options);
-        this.groupQueryClient = QueryClient.withExtensions(tmClient, setupGroupExtension);
-        this.nftQueryClient = QueryClient.withExtensions(tmClient, setupNftExtension);
+        this.groupQueryClient = new GroupQueryClient(tmClient)
+        this.nftQueryClient =  new NFTQueryClient(tmClient)
+        this.gravityQueryClient = new GravityQueryClient(tmClient)
     }
 
-    public async getGroupInfo(groupId: number): Promise<QueryGroupInfoResponse> {
-        // todo check if ! on the end works 
-        return this.groupQueryClient.group.groupInfo(groupId);
+    get groupModule (): GroupQueryClient{
+        return this.groupQueryClient
     }
 
-    public async getNftDenomSupply(denomId: string, owner?: string): Promise<QuerySupplyResponse> {
-        checkValidNftDenomId(denomId);
-
-        if (owner !== undefined) {
-            checkValidAddress(owner);
-        } else {
-            owner = '';
-        }
-
-        return this.nftQueryClient.nft.supply(denomId, owner);
+    get nftModule (): NFTQueryClient{
+        return this.nftQueryClient
     }
 
-    public async getNftOwner(owner: string, denomId?: string, pagination?: PageRequest): Promise<QueryOwnerResponse> {
-        checkValidAddress(owner);
-
-        if (denomId !== undefined) {
-            checkValidNftDenomId(denomId);
-        } else {
-            denomId = '';
-        }
-
-        return this.nftQueryClient.nft.owner(owner, denomId, pagination);
+    get gravityModule (): GravityQueryClient{
+        return this.gravityQueryClient
     }
 
-    public async getNftCollection(denomId: string, pagination?: PageRequest): Promise<QueryCollectionResponse> {
-        checkValidNftDenomId(denomId);
-
-        return this.nftQueryClient.nft.collection(denomId, pagination);
-    }
-
-    public async getNftDenom(denomId: string): Promise<QueryDenomResponse> {
-        checkValidNftDenomId(denomId);
-
-        return this.nftQueryClient.nft.denom(denomId);
-    }
-
-    public async getNftDenoms(pagination?: PageRequest): Promise<QueryDenomsResponse> {
-        return this.nftQueryClient.nft.denoms(pagination);
-    }
-
-    public async getNftDenomByName(denomName: string): Promise<QueryDenomByNameResponse> {
-        if(denomName.length === 0){
-            throw Error("Name must be at lease one symbol");
-        }
-
-        return this.nftQueryClient.nft.denomByName(denomName);
-    }
-
-    public async getNftDenomBySymbol(symbol: string): Promise<QueryDenomBySymbolResponse> {
-        if(symbol.length === 0){
-            throw Error("Symbol must be at lease one symbol");
-        }
-
-        return this.nftQueryClient.nft.denomByName(symbol);
-    }
     
-    public async getNftToken(denomId: string, tokenId: string): Promise<QueryNFTResponse> {
-        checkValidNftDenomId(denomId);
-
-        if (tokenId.length === 0) {
-            throw Error("Token id must be at least 1 symbol long.");
-        }
-
-        return this.nftQueryClient.nft.nft(denomId, tokenId);
-    }
-
-    public async getNftApprovals(denomId: string, tokenId: string): Promise<QueryApprovalsNFTResponse> {
-        checkValidNftDenomId(denomId);
-
-        if (tokenId.length === 0) {
-            throw Error("Token id must be at least 1 symbol long.");
-        }
-
-        return this.nftQueryClient.nft.approvalsNft(denomId, tokenId);
-    }
-
-    public async nftIsApprovedForAll(owner: string, operator: string): Promise<QueryApprovalsIsApprovedForAllResponse> {
-        checkValidAddress(owner);
-        checkValidAddress(operator);
-
-        return this.nftQueryClient.nft.isApprovedForAll(owner, operator);
-    }
 }
