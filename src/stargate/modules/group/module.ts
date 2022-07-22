@@ -181,7 +181,7 @@ export class GroupModule {
         memo = ""
     ): Promise<{ msg: EncodeObject, fee: StdFee }> {
         const msgEncoded = {
-            typeUrl: msgVote.typeUrl,
+            typeUrl: msgExec.typeUrl,
             value: MsgExec.fromPartial({
                 proposal_id: proposalId,
                 signer: signer
