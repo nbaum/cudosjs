@@ -1,17 +1,16 @@
 import { DirectSecp256k1HdWallet, SigningStargateClient, StargateClient, GasPrice, DirectSecp256k1Wallet, AccountData } from '../src/index';
-import { Coin } from 'cosmjs-types/cosmos/base/v1beta1/coin';
-import { NftInfo } from '../src/stargate/modules/nft/module'
 
 import Long from "long";
 
 describe("Gravity module",() => {
-    const mnemonic1 = 'ordinary witness such toddler tag mouse helmet perfect venue eyebrow upgrade rabbit'
-    const mnemonic2 = 'course hurdle stand heart rescue trap upset cousin dish embody business equip'
+    // Generated from local debug-node
+    const mnemonic1 = 'have shell collect fire erosion grid dry polar upset crumble charge post wrap tilt rebel inner harbor wolf sheriff frost inner suffer innocent extra'
+    const mnemonic2 = 'spell better witness clean salt clown open glance tree north replace bicycle erupt afford high brush tail present transfer melody lend nerve search split'
 
     const gasPrice = GasPrice.fromString('1acudos')
 
 
-    const rpc = "http://localhost:26657"
+    const rpc = "http://0.0.0.0:26657/"
     let faucetWallet: DirectSecp256k1HdWallet;
     let faucetAccount: AccountData;
     let faucetAddress: string;
@@ -19,19 +18,22 @@ describe("Gravity module",() => {
     let queryClient: StargateClient;
     let signingClient: SigningStargateClient;
 
-    let alice: AccountData;
+    let aliceAccount: AccountData;
+    let aliceWallet: DirectSecp256k1HdWallet;
+    let aliceSigningClient: SigningStargateClient
 
-    jest.setTimeout(20000);
+    jest.setTimeout(500000);
 
     beforeAll( async () => {
     faucetWallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic1)
     faucetAccount = (await faucetWallet.getAccounts())[0];
-    faucetAddress = faucetAccount.address; // cudos1yvtuaadhfhxf8ke7zm902z4rj382a8ayymq32s
-    faucet = await SigningStargateClient.connectWithSigner(rpc, faucetWallet);
+    faucetAddress = faucetAccount.address; 
     queryClient = await StargateClient.connect(rpc)
     signingClient = await SigningStargateClient.connectWithSigner(rpc,faucetWallet)
 
-    alice =(await (await DirectSecp256k1HdWallet.fromMnemonic(mnemonic2)).getAccounts())[0];
+    aliceWallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic2)
+    aliceAccount =(await aliceWallet.getAccounts())[0];
+    aliceSigningClient = await SigningStargateClient.connectWithSigner(rpc,aliceWallet)
     })
 
     test("send  Cosmos --> ETH - happy path ", async () =>{
@@ -80,5 +82,54 @@ describe("Gravity module",() => {
         await expect (signingClient.gravitySendToEth(faucetAddress,wrongEthAddr,coinAmount,feeAmount,gasPrice))
         .rejects.toThrowError("Minimum amount to send is 1");
     })
-}
-)
+
+    test("Cancel send to ETH - happy path", async () =>{
+        expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers.length)
+        .toBeGreaterThan(0)
+        let id = (await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers[0].id
+        await expect (signingClient.gravityCancelSendToEth(id,faucetAddress,gasPrice)).resolves.not.toThrowError()
+        expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers.length)
+        .toBe(0)
+    })
+
+    test("send  Cosmos --> ETH - 2nd transaction - success", async () =>{
+        const coinAmount = {denom:"acudos", amount: "1000"}
+        const feeAmount = {denom:"acudos", amount: "10000"}
+        const erc20Contract =  '0x28ea52f3ee46cac5a72f72e8b3a387c0291d586d'
+        await expect (signingClient.gravitySendToEth(faucetAddress,"0xa677d7229924af63098b9bb70b041a03a1ec7d8c",coinAmount,feeAmount,gasPrice))
+        .resolves.not.toThrowError();
+        return expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers[0].erc20Token).toEqual({amount:coinAmount.amount,contract:erc20Contract})
+    })
+
+    test("Cancel send to ETH - fail - wrong Sender", async () =>{
+        expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers.length)
+        .toBeGreaterThan(0)
+        let id = (await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers[0].id
+        const notSenderSigningClient = aliceSigningClient
+        await expect (notSenderSigningClient.gravityCancelSendToEth(id,aliceAccount.address,gasPrice)).rejects.toThrowError(`Sender ${aliceAccount.address} did not send Id ${id}`)
+    })
+
+    test("Cancel send to ETH - fail - wrong Id", async () =>{
+        expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers.length)
+        .toBeGreaterThan(0)
+        let wrongId = new Long(0,10,true)
+        await expect (signingClient.gravityCancelSendToEth(wrongId,faucetAddress,gasPrice)).rejects.toThrowError(`unknown transaction with id ${wrongId} from sender ${faucetAddress}`)
+    })
+
+    test("Cancel send to ETH - fail - invalid cosmos address", async () =>{
+        expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers.length)
+        .toBeGreaterThan(0)
+        let id = (await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers[0].id
+        await expect (signingClient.gravityCancelSendToEth(id,"wrong address",gasPrice)).rejects.toThrowError("Invalid address.")
+    })
+
+    test("Cancel send to ETH - 2nd transaction - success", async () =>{
+        expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers.length)
+        .toBeGreaterThan(0)
+        let id = (await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers[0].id
+        await expect (signingClient.gravityCancelSendToEth(id,faucetAddress,gasPrice)).resolves.not.toThrowError()
+        expect ((await queryClient.gravityModule.getPendingSendToEth(faucetAddress)).unbatchedTransfers.length)
+        .toBe(0)
+    })
+
+})
