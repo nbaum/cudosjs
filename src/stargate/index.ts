@@ -1,5 +1,10 @@
 export { StdFee } from "@cosmjs/amino";
 
+export {
+  PageRequest,
+  PageResponse,
+} from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
+
 export { Account, accountFromAny } from "@cosmjs/stargate";
 export {
   AminoMsgBeginRedelegate,
