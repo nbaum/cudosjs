@@ -38,8 +38,3 @@ build/
 
 # package-lock.json
 package-lock.json
-
-
-explanation.md
-
-test-script_copy.ts
