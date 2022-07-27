@@ -1,4 +1,4 @@
-import { MsgCreateGroupWithPolicy, MsgExec, MsgSubmitProposal, MsgVote, MsgWithdrawProposal } from "./proto-types/tx.pb";
+import { MsgCreateGroupWithPolicy, MsgExec, MsgSubmitProposal, MsgUpdateGroupMembers, MsgUpdateGroupMetadata, MsgUpdateGroupPolicyDecisionPolicy, MsgUpdateGroupPolicyMetadata, MsgVote, MsgWithdrawProposal } from "./proto-types/tx.pb";
 import { ThresholdDecisionPolicy } from "./proto-types/types.pb";
 
 const PREFIX = "/cosmos.group.v1."
@@ -30,4 +30,24 @@ export const msgWithdrawProposal = {
 export const thresholdDecisionPolicy = {
     typeUrl: PREFIX.concat("ThresholdDecisionPolicy"),
     type: ThresholdDecisionPolicy
+};
+
+export const msgUpdateGroupMembers = {
+    typeUrl: PREFIX.concat("MsgUpdateGroupMembers"),
+    type: MsgUpdateGroupMembers
+};
+
+export const msgUpdateGroupMetadata = {
+    typeUrl: PREFIX.concat("MsgUpdateGroupMetadata"),
+    type: MsgUpdateGroupMetadata
+};
+
+export const msgUpdateGroupPolicyMetadata = {
+    typeUrl: PREFIX.concat("MsgUpdateGroupPolicyMetadata"),
+    type: MsgUpdateGroupPolicyMetadata
+};
+
+export const msgUpdateGroupPolicyDecisionPolicy = {
+    typeUrl: PREFIX.concat("MsgUpdateGroupPolicyDecisionPolicy"),
+    type: MsgUpdateGroupPolicyDecisionPolicy
 };
