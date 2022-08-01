@@ -15,7 +15,6 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "test-private":"jest ./test --rpc=http://34.123.153.6:26657",
     "test": "npx blast node start; jest ./test --rpc=http://localhost:26657; npx blast node stop",
     "test-dev-container": "npx blast node start; npx jest ./test --rpc=http://host.docker.internal:26657; docker container stop cudos_blast_node",
     "build": "rm -rf ./build && tsc",

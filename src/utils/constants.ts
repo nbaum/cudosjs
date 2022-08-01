@@ -17,6 +17,8 @@ export class CudosNetworkConsts {
     static BECH32_PREFIX_CONS_PUB = 'cudosvalconspub';
     static BECH32_ACC_ADDR_LENGTH = 44;
 
+    static MESSAGE_TYPE_URL = '/gravity.v1.MsgSendToEth';
+
 }
 
 export const CURRENCY_DISPLAY_NAME = CudosNetworkConsts.CURRENCY_DISPLAY_NAME;

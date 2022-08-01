@@ -1,16 +1,18 @@
-import { QueryClient, StargateClient, StargateClientOptions } from "@cosmjs/stargate";
+import { IndexedTx, QueryClient, StargateClient, StargateClientOptions } from "@cosmjs/stargate";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { GroupQueryClient } from "./modules/group/clients/queryClient";
 import { NFTQueryClient } from "./modules/nft/clients/queryClient";
 import { GravityQueryClient } from "./modules/gravity/clients/queryClient";
 
+import { getFullRegistry } from "./full-registry";
 
-import { SigningStargateClient } from ".";
+import { DecodedTxRaw, DecodeObject, decodeTxRaw, Registry } from "@cosmjs/proto-signing";
 
 export class CudosStargateClient extends StargateClient {
     private readonly groupQueryClient: GroupQueryClient;
     private readonly nftQueryClient: NFTQueryClient;
     private readonly gravityQueryClient: GravityQueryClient
+    public readonly  registry: Registry
 
 
     public static override async connect(
@@ -26,6 +28,7 @@ export class CudosStargateClient extends StargateClient {
         this.groupQueryClient = new GroupQueryClient(tmClient)
         this.nftQueryClient =  new NFTQueryClient(tmClient)
         this.gravityQueryClient = new GravityQueryClient(tmClient)
+        this.registry = getFullRegistry()
     }
 
     get groupModule (): GroupQueryClient{
@@ -40,5 +43,17 @@ export class CudosStargateClient extends StargateClient {
         return this.gravityQueryClient
     }
 
+    public async decodeQryResponse(resp: IndexedTx){
+        const respCopy:any = {...resp}
+        // Decoding the Trx
+        const decodedTx:DecodedTxRaw = decodeTxRaw(respCopy.tx)
+        // Decoding each message in the transaction
+        for(let i =0; i< decodedTx.body.messages.length; i++){
+            decodedTx.body.messages[i] = this.registry.decode(decodedTx.body.messages[i])
+        }
+        respCopy.tx = decodedTx 
+
+        return respCopy
+    }
     
 }

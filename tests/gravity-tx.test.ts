@@ -4,8 +4,8 @@ import Long from "long";
 
 describe("Gravity module",() => {
     // Generated from local debug-node
-    const mnemonic1 = 'have shell collect fire erosion grid dry polar upset crumble charge post wrap tilt rebel inner harbor wolf sheriff frost inner suffer innocent extra'
-    const mnemonic2 = 'spell better witness clean salt clown open glance tree north replace bicycle erupt afford high brush tail present transfer melody lend nerve search split'
+    const mnemonic1 = 'tonight arrive prefer magic alone impose donate weekend dinner slogan test kangaroo have spatial antenna roof nut nerve keen jump there summer pioneer real'
+    const mnemonic2 = 'glow disease index divide scene isolate vintage obey number boost minute else forget journey rough affair vanish brown solid dismiss silk empower dial lemon'
 
     const gasPrice = GasPrice.fromString('1acudos')
 

@@ -1,9 +1,11 @@
 import { GasPrice, StdFee } from "@cosmjs/stargate";
-import { ClientRegistry, ClientSimulateFn, estimateFee, registerMsgs} from "../../../utils";
+import { ClientRegistry, ClientSimulateFn, estimateFee,generateMsg , registerMsgs} from "../../../utils";
 import { msgSendToEth, msgSetMinFeeTransferToEth, msgCancelSendToEth } from "./types";
 import { checkValidNftDenomId, checkValidAddress, checkValidETHAddress } from "../../../utils/checks";
 import { coin, Coin } from "@cosmjs/proto-signing";
 import { EncodeObject } from "@cosmjs/proto-signing";
+
+// TO-DO - create the msg's using the generateMsg factory
 
 export class GravityModule {
     private readonly _client: ClientSimulateFn
