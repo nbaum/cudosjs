@@ -248,7 +248,6 @@ export class GroupModule {
             votingPeriod: number,
             minExecutionPeriod: number
         },
-        groupId: number,
         multisigAddress: string,
         proposer: string,
         proposalMetadata: string,
@@ -266,7 +265,7 @@ export class GroupModule {
 
         const msg = MsgUpdateGroupPolicyDecisionPolicy.fromPartial({
             admin: multisigAddress,
-            address: groupId.toString(),
+            address: multisigAddress,
             decision_policy: {
                 type_url: thresholdDecisionPolicy.typeUrl,
                 value: ThresholdDecisionPolicy.encode(threshold).finish()
