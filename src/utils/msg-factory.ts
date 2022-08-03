@@ -1,13 +1,16 @@
 import * as nftMsgTypes from "../stargate/modules/nft/types"
 import * as gravityMsgTypes from "../stargate/modules/gravity/types"
 import * as groupMsgTypes from "../stargate/modules/group/types"
+import * as cosmosDefMsgTypes from "../stargate/modules/cosmos/types"
 import { EncodeObject, GeneratedType, TsProtoGeneratedType } from "@cosmjs/proto-signing"
 import { Method } from "@cosmjs/tendermint-rpc"
+ 
 
-const MsgTypesMap = {
+const MsgTypesMap: any = {
     ...nftMsgTypes,
     ...gravityMsgTypes,
-    ...groupMsgTypes
+    ...groupMsgTypes,
+    ...cosmosDefMsgTypes
 }
 
 type msgTypesMapType = typeof MsgTypesMap
@@ -24,8 +27,8 @@ export function generateMsg< T extends keyof msgTypesMapType, K extends ReturnTy
     
     const msg:IMsg<T> = {
         typeUrl:MsgTypesMap[msgName].typeUrl ,
-        // @ts-ignore - fails to recognize it as a function
         value: MsgTypesMap[msgName].type.fromPartial({
+            // @ts-ignore
                 ...params
             })
     }
