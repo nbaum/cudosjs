@@ -1,4 +1,5 @@
 export { StdFee } from "@cosmjs/amino";
+export * from '@cosmjs/encoding';
 
 export {
   PageRequest,
@@ -113,3 +114,9 @@ export {
 } from "@cosmjs/stargate";
 export { CudosStargateClient as StargateClient } from "./cudos-stargateclient";
 export { CudosSigningStargateClient as SigningStargateClient } from "./cudos-signingstargateclient";
+export { nftMsgProto,
+          nftQueryProto,
+          gravityMsgProto,
+          gravityQueryProto,
+          groupMsgProto,
+          groupQueryProto } from "./modules"

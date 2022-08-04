@@ -56,7 +56,7 @@ describe('alpha contract', () => {
   test('issue denom - happy path', async () => {
     await expect(faucet.nftIssueDenom(faucetAddress, correctDenom.id, correctDenom.name, correctDenom.schema, correctDenom.symbol, gasPrice))
       .resolves.not.toThrowError();
-    return expect(queryClient.getNftDenom(correctDenom.id)).resolves.toEqual({ denom: correctDenom });
+    return expect(queryClient.nftModule.getNftDenom(correctDenom.id)).resolves.toEqual({ denom: correctDenom });
   })
 
   test('issue denom - fail denom id exists', async () => {
@@ -72,7 +72,7 @@ describe('alpha contract', () => {
   test('mint token - happy path', async () => {
     await faucet.nftMintToken(faucetAddress, correctDenom.id, correctToken.name, correctToken.uri, correctToken.data, faucetAddress, gasPrice);
     newTokenId++;
-    return expect(queryClient.getNftToken(correctDenom.id, correctToken.id)).resolves.toEqual({ nft: correctToken });
+    return expect(queryClient.nftModule.getNftToken(correctDenom.id, correctToken.id)).resolves.toEqual({ nft: correctToken });
   })
 
   test('mint token - invalid denom id', async () => {
@@ -93,28 +93,28 @@ describe('alpha contract', () => {
   test('edit token - happy path edit name', async () => {
     await expect(faucet.nftEditToken(faucetAddress, correctDenom.id, correctToken.id, 'editedName', correctToken.uri, correctToken.data, gasPrice))
       .resolves.not.toThrowError();
-    const editedToken = await queryClient.getNftToken(correctDenom.id, correctToken.id);
+    const editedToken = await queryClient.nftModule.getNftToken(correctDenom.id, correctToken.id);
     return expect(editedToken.nft?.name).toEqual('editedName');
   })
 
   test('edit token - happy path edit uri', async () => {
     await expect(faucet.nftEditToken(faucetAddress, correctDenom.id, correctToken.id, correctToken.name, 'editedUri', correctToken.data, gasPrice))
       .resolves.not.toThrowError();
-    const editedToken = await queryClient.getNftToken(correctDenom.id, correctToken.id);
+    const editedToken = await queryClient.nftModule.getNftToken(correctDenom.id, correctToken.id);
     return expect(editedToken.nft?.uri).toEqual('editedUri');
   })
 
   test('edit token - happy path edit data', async () => {
     await expect(faucet.nftEditToken(faucetAddress, correctDenom.id, correctToken.id, correctToken.name, correctToken.uri, 'editedData', gasPrice))
       .resolves.not.toThrowError();
-    const editedToken = await queryClient.getNftToken(correctDenom.id, correctToken.id);
+    const editedToken = await queryClient.nftModule.getNftToken(correctDenom.id, correctToken.id);
     return expect(editedToken.nft?.data).toEqual('editedData');
   })
 
   test('transfer token - happy path', async () => {
     await expect(faucet.nftTransfer(faucetAddress, correctDenom.id, correctToken.id, faucetAddress, alice.address, gasPrice))
       .resolves.not.toThrowError();
-    const editedToken = await queryClient.getNftToken(correctDenom.id, correctToken.id);
+    const editedToken = await queryClient.nftModule.getNftToken(correctDenom.id, correctToken.id);
     return expect(editedToken.nft?.owner).toEqual(alice.address);
   })
 
@@ -136,7 +136,7 @@ describe('alpha contract', () => {
     await expect(faucet.nftApprove(faucetAddress, correctDenom.id, `${newTokenId}`, alice.address, gasPrice))
       .resolves.not.toThrowError();
 
-    const nft = await queryClient.getNftToken(correctDenom.id, `${newTokenId}`);
+    const nft = await queryClient.nftModule.getNftToken(correctDenom.id, `${newTokenId}`);
 
     return expect(nft?.nft?.approvedAddresses).toContain(alice.address);
   })
@@ -144,7 +144,7 @@ describe('alpha contract', () => {
   test('revoke token - happy path', async () => {
     await expect(faucet.nftRevokeToken(faucetAddress, correctDenom.id, `${newTokenId}`, alice.address, gasPrice))
       .resolves.not.toThrowError();
-    const nft = await queryClient.getNftToken(correctDenom.id, `${newTokenId}`);
+    const nft = await queryClient.nftModule.getNftToken(correctDenom.id, `${newTokenId}`);
 
     return expect(nft?.nft?.approvedAddresses).not.toContain(alice.address);
   })
@@ -157,24 +157,24 @@ describe('alpha contract', () => {
   test('approve all true - happy path', async () => {
     await expect(faucet.nftApproveAll(faucetAddress, alice.address, true, gasPrice))
       .resolves.not.toThrowError();
-    return expect(queryClient.nftIsApprovedForAll(faucetAddress, alice.address))
+    return expect(queryClient.nftModule.nftIsApprovedForAll(faucetAddress, alice.address))
       .resolves.toEqual({ isApproved: true });
   })
 
   test('approve all false - happy path', async () => {
     await expect(faucet.nftApproveAll(faucetAddress, alice.address, false, gasPrice))
       .resolves.not.toThrowError();
-    return expect(queryClient.nftIsApprovedForAll(faucetAddress, alice.address))
+    return expect(queryClient.nftModule.nftIsApprovedForAll(faucetAddress, alice.address))
       .resolves.toEqual({ isApproved: false });
   })
 
   test('burn token - happy path', async () => {
-    await expect(queryClient.getNftToken(correctDenom.id, `${newTokenId}`))
+    await expect(queryClient.nftModule.getNftToken(correctDenom.id, `${newTokenId}`))
       .resolves.not.toThrowError();
     await expect(faucet.nftBurnToken(faucetAddress, correctDenom.id, `${newTokenId}`, gasPrice))
       .resolves.not.toThrowError();
 
-    return expect(queryClient.getNftToken(correctDenom.id, `${newTokenId}`))
+    return expect(queryClient.nftModule.getNftToken(correctDenom.id, `${newTokenId}`))
       .rejects.toThrowError('Query failed with (18): invalid NFT');
   })
 
@@ -202,7 +202,7 @@ describe('alpha contract', () => {
     for (let i = 0; i < mintedTokenCount; i++) {
       newTokenId += 1;
       correctToken.id = newTokenId.toString();
-      await expect(queryClient.getNftToken(correctDenom.id, newTokenId.toString())).resolves.toEqual({ nft: correctToken });
+      await expect(queryClient.nftModule.getNftToken(correctDenom.id, newTokenId.toString())).resolves.toEqual({ nft: correctToken });
     }
   })
 })

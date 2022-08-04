@@ -1,5 +1,6 @@
 import { fromBech32 } from "@cosmjs/encoding";
-import { BECH32_PREFIX_ACC_ADDR  } from "./constants";
+import { BECH32_PREFIX_ACC_ADDR, BECH32_PREFIX_VAL_ADDR  } from "./constants";
+
 
 export function isValidAddress(address: string, requiredPrefix?: string): boolean {
     if (requiredPrefix === undefined) {
@@ -29,5 +30,30 @@ export function checkValidNftDenomId(denomId: string) {
     const pattern = /^[a-z][a-z\d]*$/;
     if (!pattern.test(denomId)) {
         throw Error("Invalid denom id - only accepts lowercase alphanumeric characters, and begin with an english letter");
+    }
+}
+
+// Validates the input string as an Ethereum Address
+// Addresses must not be empty, have 42 character length, start with 0x and have 40 remaining characters in [0-9a-fA-F]
+export function checkValidETHAddress(ethAddress: string) {
+    // ETHContractAddressLen is the length of contract address strings
+    const ETHContractAddressLen = 42
+    const pattern = /^0x[0-9a-fA-F]{40}$/
+
+    if (ethAddress === "") {
+		throw Error("Empty ETH Address")
+	}
+	if (ethAddress.length != ETHContractAddressLen) {
+        throw Error(`address(${ethAddress}) of the wrong length exp(${ETHContractAddressLen}) actual(${ethAddress.length})`)
+	}
+	if (!pattern.test(ethAddress)) {
+        throw Error(`Invalid ETH Address`)
+	}
+
+}
+
+export function checkValidValidatorAddress(address: string) {
+    if(!isValidAddress(address,BECH32_PREFIX_VAL_ADDR)) {
+        throw Error("Invalid Validator address.")
     }
 }
