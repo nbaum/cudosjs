@@ -4,7 +4,7 @@ import { GasPrice, StdFee } from "../..";
 import { Exec, MsgCreateGroupWithPolicy, MsgSubmitProposal, MsgUpdateGroupMetadata, MsgVote, MsgExec, MsgWithdrawProposal, MsgUpdateGroupMembers, MsgUpdateGroupPolicyMetadata, MsgUpdateGroupPolicyDecisionPolicy } from "./proto-types/tx.pb";
 import { ThresholdDecisionPolicy, Member, VoteOption } from "./proto-types/types.pb";
 import { msgCreateGroupWithPolicy, msgSubmitProposal, thresholdDecisionPolicy, msgVote, msgExec, msgUpdateGroupMembers, msgUpdateGroupMetadata, msgUpdateGroupPolicyMetadata, msgUpdateGroupPolicyDecisionPolicy, msgWithdrawProposal } from "./types";
-import { MsgMultiSend } from "cosmjs-types/cosmos/bank/v1beta1/tx"
+import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx"
 
 
 export class GroupModule {
@@ -76,6 +76,43 @@ export class GroupModule {
 
         return {
             msg: msgEncoded,
+            fee: fee
+        }
+    }
+
+    public async msgSingleSendProposal(
+        recipient: string,
+        amount: Coin[],
+        multisigAddress: string,
+        proposer: string,
+        proposalMetadata: string,
+        gasPrice: GasPrice,
+        gasMultiplier = DEFAULT_GAS_MULTIPLIER,
+        memo = ""
+    ): Promise<{ msg: EncodeObject, fee: StdFee }> {
+        const singleSendMsg = MsgSend.fromPartial({
+            fromAddress: multisigAddress,
+            toAddress: recipient,
+            amount: amount
+        });
+
+        const msgProposal = {
+            typeUrl: msgSubmitProposal.typeUrl,
+            value: MsgSubmitProposal.fromPartial({
+                address: multisigAddress,
+                proposers: [proposer],
+                metadata: proposalMetadata,
+                messages: [{
+                    type_url: "/cosmos.bank.v1beta1.MsgSend",
+                    value: MsgSend.encode(singleSendMsg).finish()
+                }],
+            })
+        }
+
+        const fee = await estimateFee(this._client, proposer, [msgProposal], gasPrice, gasMultiplier, memo);
+
+        return {
+            msg: msgProposal,
             fee: fee
         }
     }
