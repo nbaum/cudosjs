@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { OfflineSigner } from 'src/proto-signing';
+import { OfflineSigner } from '../proto-signing';
 
 export default abstract class Ledger {
 
