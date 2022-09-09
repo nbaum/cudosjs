@@ -115,6 +115,9 @@ export class KeplrWallet extends Ledger {
                     average: Number(this.keplrWalletConfig.GAS_PRICE) * 2,
                     high: Number(this.keplrWalletConfig.GAS_PRICE) * 4,
                 },
+                features: [
+                    "cosmwasm"
+                ],
             });
         } catch (ex) {
             console.log(ex);
